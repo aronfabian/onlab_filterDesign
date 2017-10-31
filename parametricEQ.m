@@ -54,7 +54,12 @@ B = [b0 b1 b2];
 % BW = 1000/(fs/2);
 % [B1,A1] = designParamEQ(N1,G,Wo,BW);
 
-[H,f]=freqz(B,A,65536,fs);
+% [H,f]=freqz(B,A,65536,fs);
+
+startFreq = 100;
+endFreq = 10000;
+f = logspace(log10(startFreq),log10(endFreq),10000);
+[H,f]=freqz(B,A,f,fs);
 
 if nargout==0
   
