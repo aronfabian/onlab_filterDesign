@@ -8,9 +8,10 @@ fileNames = {
 %'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
 };
 
-startFreq = 100;
-endFreq = 10000;
-div = 9900/65535;
+START_FREQ = 100; % vizsgálati freki tartomány alja
+END_FREQ = 10000; % vizsgálati freki tartomány teteje
+COMP_FLINES = 1000; % az átviteli fgv számításakor használt felbontás
+PLOT_FLINES = 600; % a megjelenítéshez használt felbontás
 
 load('A_weight.mat');
 load('tolerance.mat');
@@ -20,8 +21,8 @@ for fileNum = 1:length(fileNames)
     
     % -------------------------------------------------------------------
     % Ezzel tetszõleges felbontásra ki tudod számolni a frekvenciamenetet
-    f_interp = logspace(log10(startFreq),log10(endFreq),10000);
-    f_interp_plot = logspace(log10(startFreq),log10(endFreq),600);
+    f_interp = logspace(log10(START_FREQ),log10(END_FREQ),COMP_FLINES);
+    f_interp_plot = logspace(log10(START_FREQ),log10(END_FREQ),PLOT_FLINES);
     X_interp = interp1(phone_bFreqs, phone_bX, f_interp, 'pchip');
     X_interp_plot = interp1(phone_bFreqs, phone_bX, f_interp_plot, 'pchip');
     % -------------------------------------------------------------------
@@ -36,10 +37,28 @@ for fileNum = 1:length(fileNames)
     % H_mic to dB scale
     H_mic = 20*log10(X_interp);
     % H_mic * A_weight
-    H_mic = H_mic + A_interp;
+    H_mic = H_mic - A_interp;
+    
+     % Butterworth szûrõk
+    fcb1 = 100; % highpass filter cutoff freq
+    fcb2 = 1000; % highpass filter cutoff freq
+    fcb3 = 6000; % lowpass filetr cutoff freq
+    fs = 44100;
+    [b,a] = butter(1,fcb1/(fs/2), 'high');
+    [Hb1,f] = freqz(b,a,f_interp,fs);
+    Hb1 = 20*log10(abs(Hb1));
+    [b,a] = butter(1,fcb2/(fs/2), 'high');
+    [Hb2,f] = freqz(b,a,f_interp,fs);
+    Hb2 = 20*log10(abs(Hb2));
+    [b,a] = butter(1,fcb3/(fs/2), 'low');
+    [Hb3,f] = freqz(b,a,f_interp,fs);
+    Hb3 = 20*log10(abs(Hb3));
+    H_butter = Hb1 + Hb2 + Hb3;
+    
+    H_mic = H_mic + H_butter;
    
     % find 1kHz
-    trgt_f = find(f_interp(1:end-1)<1000 & f_interp(2:end)>1000)
+    trgt_f = find(f_interp(1:end-1)<1000 & f_interp(2:end)>1000);
     % H_mic offset with Magnitude[dB] at 1kHz 
     H_mic = H_mic - H_mic(trgt_f) ;
     % H_mic számolása megjelenítéshez
@@ -62,14 +81,26 @@ for fileNum = 1:length(fileNames)
     %hold off;
     %pause
     
+    H_mic_origin = H_mic;
+    
     for filterNum = 1:6
+        
+        
+        % fine-tuning of prev. filters
+        if (filterNum > 2)
+            for i = 1:filterNum-1
+                [H1,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
+                [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
+                H_mic = H_mic - H1 + H2;
+            end
+        end
     
         % H_mic and H_trgt=0 crossings
-        cross = find((H_mic(1:end-1)>0 & H_mic(2:end) < 0) | (H_mic(1:end-1)<0 & H_mic(2:end)>0));
+        cross = find((H_mic(1:end-1) .* H_mic(2:end) < 0));
         areaNum = length(cross)+1;
 
         % start-end frequency
-        startEndFreq = [startFreq f_interp(cross) endFreq];
+        startEndFreq = [START_FREQ f_interp(cross) END_FREQ];
         startEnd = [1 cross length(f_interp)];
 
         % error areas
@@ -108,14 +139,29 @@ for fileNum = 1:length(fileNames)
             end
         end
         
+        
+        
         if(max(errorAreas) == 0)
             fprintf('Class1-es tolerancia sávba tartozó átvitelhez szükséges \nszûrõk száma: ')
             disp(filterNum-1)
             disp('-------------------------')
+            figure
+            H_mic_o_plot = interp1(f_interp, H_mic_origin, f_interp_plot, 'pchip');
+            semilogx(f_interp_plot,H_mic_o_plot)
+            hold on
+            for i = 1:size(filters,1)
+                [He,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
+                H_mic_o_plot = H_mic_o_plot + He; 
+                semilogx(f_interp_plot,He)
+                
+            end
+       
+            semilogx(f_interp_plot,H_mic_o_plot)       
+            semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
             break
          
         end
-
+        
         % select maximum error area
         [maxArea, maxAreaNum] = max(errorAreas);
         % initial center frequnecy: frequency of the maxumim magnitude in
@@ -126,6 +172,7 @@ for fileNum = 1:length(fileNames)
         % initial gain: (-1)*maximum magnitude in the selected area
         gain = (-1)*maxErrors(maxAreaNum);
         fs=44100;
+        
         
         disp('Start End Freq:')
         disp(startEndFreq(maxAreaNum))
@@ -140,6 +187,12 @@ for fileNum = 1:length(fileNames)
         %pause
         % estimate parametric filter
         [estGain,estFc,estBw,Ho,f] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp);
+        % save filter parameters 
+        if (filterNum == 1)
+            filters = [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
+        else
+            filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
+        end
         
         disp('A becslõ értékei: ')
         disp ('estFc: ')
@@ -150,10 +203,12 @@ for fileNum = 1:length(fileNames)
         disp(estGain)
         disp('-------------------------')
         
+        
         % new transfer function = transfer function + parametric filter
+
         H_mic = H_mic + Ho;
         H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
-        
+
 %         color = ['r';'g';'y';'m';'c';'k'];
 %         semilogx(f_interp_plot, H_mic_plot, color(filterNum))
         % auto color

@@ -1,4 +1,4 @@
-function [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs);
+function [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs,COMP_FREQS);
 %BOOST - Design a digital boost filter at given gain g, 
 %        center frequency fc in Hz,
 %        bandwidth bw in Hz (default = fs/10), and
@@ -14,6 +14,7 @@ function [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs);
 % [H2,f]=parametricEQ(g,1000,1/6,44100);
 % semilogx(f,[Ho H1+H2+H3])
 
+if ~exist('COMP_FREQS','var') COMP_FREQS = 65536; end
 
 if nargin<4, fs = 1; end
 if nargin<3, bw = fs/10; end
@@ -56,10 +57,7 @@ B = [b0 b1 b2];
 
 % [H,f]=freqz(B,A,65536,fs);
 
-startFreq = 100;
-endFreq = 10000;
-f = logspace(log10(startFreq),log10(endFreq),10000);
-[H,f]=freqz(B,A,f,fs);
+[H,f]=freqz(B,A,COMP_FREQS,fs);
 
 if nargout==0
   
