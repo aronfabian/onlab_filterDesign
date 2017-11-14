@@ -3,8 +3,8 @@ close all;
 
 fileNames = {
 %'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
-'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
+'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
+%'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
 %'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
 };
 
@@ -39,28 +39,13 @@ for fileNum = 1:length(fileNames)
     % H_mic * A_weight
     H_mic = H_mic - A_interp;
     
-     % Butterworth szûrõk
-    fcb1 = 100; % highpass filter cutoff freq
-    fcb2 = 1000; % highpass filter cutoff freq
-    fcb3 = 6000; % lowpass filetr cutoff freq
-    fs = 44100;
-    [b,a] = butter(1,fcb1/(fs/2), 'high');
-    [Hb1,f] = freqz(b,a,f_interp,fs);
-    Hb1 = 20*log10(abs(Hb1));
-    [b,a] = butter(1,fcb2/(fs/2), 'high');
-    [Hb2,f] = freqz(b,a,f_interp,fs);
-    Hb2 = 20*log10(abs(Hb2));
-    [b,a] = butter(1,fcb3/(fs/2), 'low');
-    [Hb3,f] = freqz(b,a,f_interp,fs);
-    Hb3 = 20*log10(abs(Hb3));
-    H_butter = Hb1 + Hb2 + Hb3;
-    
-    H_mic = H_mic + H_butter;
    
     % find 1kHz
     trgt_f = find(f_interp(1:end-1)<1000 & f_interp(2:end)>1000);
     % H_mic offset with Magnitude[dB] at 1kHz 
     H_mic = H_mic - H_mic(trgt_f) ;
+    
+    
     % H_mic számolása megjelenítéshez
     H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
@@ -74,26 +59,29 @@ for fileNum = 1:length(fileNames)
     hold on
     semilogx(f_interp_plot,H_trgt_plot)
     semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
-    leg = {'H_{mic}original';'H_{trgt}';'tolerance band';'';'1';'2';'3';'4';'5';'6'};
+    leg = {'H_{mic}original';'H_{trgt}';'tolerance band';'';'Butterworth filters';'1';'2';'3';'4';'5';'6'};
     legend(leg(1:3))
-    %set(gca, 'XScale', 'log')
-   
-    %hold off;
-    %pause
     
     H_mic_origin = H_mic;
+    
+    [Hb1,Hb2] = butterworthFilters(H_mic,f_interp,START_FREQ,END_FREQ);
+    H_mic = H_mic+Hb1+Hb2;
+    H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
+    semilogx(f_interp_plot,H_mic_plot)
+    legend(leg(1:5))
+    pause
     
     for filterNum = 1:6
         
         
-        % fine-tuning of prev. filters
-        if (filterNum > 2)
-            for i = 1:filterNum-1
-                [H1,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
-                [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
-                H_mic = H_mic - H1 + H2;
-            end
-        end
+%         % fine-tuning of prev. filters
+%         if (filterNum > 2)
+%             for i = 1:filterNum-1
+%                 [H1,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
+%                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
+%                 H_mic = H_mic - H1 + H2;
+%             end
+%         end
     
         % H_mic and H_trgt=0 crossings
         cross = find((H_mic(1:end-1) .* H_mic(2:end) < 0));
@@ -117,10 +105,8 @@ for fileNum = 1:length(fileNames)
         maxErrorsFreq = zeros(areaNum,1);
         maxErrorsPlace = zeros(areaNum,1);
         for i = 1:areaNum
-            maxFlag = 0;
             if (H_mic(startEnd(i)+1) > 0)
                 [maxErrors(i), maxErrorsPlace(i)] = max(H_mic(startEnd(i):startEnd(i+1)));
-                maxFlag = 1;
             else
                 [maxErrors(i), maxErrorsPlace(i)] = min(H_mic(startEnd(i):startEnd(i+1)));
             end
@@ -128,19 +114,12 @@ for fileNum = 1:length(fileNames)
             maxErrorsFreq(i) =  f_interp(maxErrorsPlace(i));
             % if a maximum error of an error area is inside the tolerance
             % band, error area will be 0 (it's good enough)
-            if(maxFlag == 1)
-                if(H_mic(maxErrorsPlace(i)) < tol_interp(maxErrorsPlace(i),1))
-                    errorAreas(i) = 0;
-                end
-            else
-                if(H_mic(maxErrorsPlace(i)) > tol_interp(maxErrorsPlace(i),2))
-                    errorAreas(i) = 0;
-                end
+            if (isempty(find((H_mic(startEnd(i):startEnd(i+1)) > tol_interp(startEnd(i):startEnd(i+1),1)) | (H_mic(startEnd(i):startEnd(i+1)) < tol_interp(startEnd(i):startEnd(i+1),2)), 1)))
+                 errorAreas(i) = 0;
             end
         end
         
-        
-        
+        % end of iteration
         if(max(errorAreas) == 0)
             fprintf('Class1-es tolerancia sávba tartozó átvitelhez szükséges \nszûrõk száma: ')
             disp(filterNum-1)
@@ -148,7 +127,16 @@ for fileNum = 1:length(fileNames)
             figure
             H_mic_o_plot = interp1(f_interp, H_mic_origin, f_interp_plot, 'pchip');
             semilogx(f_interp_plot,H_mic_o_plot)
+            title('Original and final transfer, Filters')
             hold on
+            semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
+            Hb1_plot = interp1(f_interp,Hb1,f_interp_plot,'pchip');
+            Hb2_plot = interp1(f_interp,Hb2,f_interp_plot,'pchip');
+            semilogx(f_interp_plot,Hb1_plot)
+            semilogx(f_interp_plot,Hb2_plot)
+            H_mic_o_plot = H_mic_o_plot+Hb1_plot+Hb2_plot;
+            
+            
             for i = 1:size(filters,1)
                 [He,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
                 H_mic_o_plot = H_mic_o_plot + He; 
@@ -157,7 +145,8 @@ for fileNum = 1:length(fileNames)
             end
        
             semilogx(f_interp_plot,H_mic_o_plot)       
-            semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
+            leg2 = [leg(1); leg(3:4);{'Butterworth HPF'};{'Butterworth LPF'};leg(6:5+size(filters,1)); {'H_{final}'}];
+            legend(leg2)
             break
          
         end
@@ -182,15 +171,18 @@ for fileNum = 1:length(fileNames)
         disp(fc)
         disp ('bw: ')
         disp(bw)
+        
         disp ('gain: ')
         disp(gain)
         %pause
         % estimate parametric filter
         [estGain,estFc,estBw,Ho,f] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp);
+        %[estGain,estFc,estBw,Ho,f] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
         % save filter parameters 
         if (filterNum == 1)
             filters = [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
         else
+            %[estGain,estFc,estBw,Ho,f] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
             filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
         end
         
@@ -214,7 +206,7 @@ for fileNum = 1:length(fileNames)
         % auto color
         semilogx(f_interp_plot, H_mic_plot )
         set(gca, 'XScale', 'log')
-        legend(leg(1:4+filterNum))
+        legend(leg(1:5+filterNum))
         pause
     end
 end
