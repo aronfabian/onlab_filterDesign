@@ -20,17 +20,7 @@ function [gain_dB,fc,bw_oct,Ho,f] = toleranceOptim( initGain, initFc, initBw, fs
     end
     
     H_mic_temp = H_mic + H_filt;
-    
-    % goal: lowerMin = upperMin
-    
-    % changing of transfer function at upperMinPlace and lowerMinPlace =>
-    % to calcultate new gain
-    
-    % OR ~ successive approximation
-%     figure
-%     semilogx(f_interp,H_mic_temp)
-%     hold on
-%     semilogx(f_interp,tol_interp(:,1:2),'r--')
+  
     
     n = 0;
     upperMin = 1;

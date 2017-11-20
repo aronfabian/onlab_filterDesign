@@ -2,10 +2,10 @@ clear all;
 close all;
 
 fileNames = {
-%'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
+'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
+'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
 'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
+'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
 };
 
 START_FREQ = 100; % vizsgálati freki tartomány alja
@@ -19,15 +19,14 @@ load('tolerance.mat');
 for fileNum = 1:length(fileNames)
     load([fileNames{fileNum}]);
     
-    % -------------------------------------------------------------------
-    % Ezzel tetszõleges felbontásra ki tudod számolni a frekvenciamenetet
+ 
     f_interp = logspace(log10(START_FREQ),log10(END_FREQ),COMP_FLINES);
     f_interp_plot = logspace(log10(START_FREQ),log10(END_FREQ),PLOT_FLINES);
     X_interp = interp1(phone_bFreqs, phone_bX, f_interp, 'pchip');
     X_interp_plot = interp1(phone_bFreqs, phone_bX, f_interp_plot, 'pchip');
-    % -------------------------------------------------------------------
+
     
-    % A_wight, tolerance kiszámolása f_intrep helyeken (csak egyszer számoljuk ki)
+    % A_wight, calculate tolerance at f_intrep 
     if(fileNum == 1)
         A_interp = interp1(A_weight(:,1), A_weight(:,2) , f_interp, 'pchip');
         tol_interp = interp1(tolerance(:,1), tolerance(:,2:3) , f_interp, 'pchip');
@@ -51,7 +50,7 @@ for fileNum = 1:length(fileNames)
 
     H_trgt = zeros(length(f_interp),1);
     H_trgt_plot = zeros(length(f_interp_plot),1);
-    figure(fileNum)
+    figure()
     semilogx(f_interp_plot,H_mic_plot)
     title(fileNames{fileNum},'Interpreter', 'none')
     xlabel('Frequency (Hz)')
@@ -64,24 +63,25 @@ for fileNum = 1:length(fileNames)
     
     H_mic_origin = H_mic;
     
+    % Butterworth Filters
     [Hb1,Hb2] = butterworthFilters(H_mic,f_interp,START_FREQ,END_FREQ);
     H_mic = H_mic+Hb1+Hb2;
     H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
     semilogx(f_interp_plot,H_mic_plot)
     legend(leg(1:5))
-    pause
+%     pause
     
     for filterNum = 1:6
         
         
-%         % fine-tuning of prev. filters
-%         if (filterNum > 2)
-%             for i = 1:filterNum-1
-%                 [H1,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
-%                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
-%                 H_mic = H_mic - H1 + H2;
-%             end
-%         end
+        % fine-tuning of prev. filters
+        if (filterNum > 2)
+            for i = 1:filterNum-1
+                [H1,f] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
+                [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
+                H_mic = H_mic - H1 + H2;
+            end
+        end
     
         % H_mic and H_trgt=0 crossings
         cross = find((H_mic(1:end-1) .* H_mic(2:end) < 0));
@@ -182,16 +182,13 @@ for fileNum = 1:length(fileNames)
         
         
         % new transfer function = transfer function + parametric filter
-
         H_mic = H_mic + Ho;
         H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
-
-%         color = ['r';'g';'y';'m';'c';'k'];
-%         semilogx(f_interp_plot, H_mic_plot, color(filterNum))
-        % auto color
+        
+        % plot new transfer function
         semilogx(f_interp_plot, H_mic_plot )
         set(gca, 'XScale', 'log')
         legend(leg(1:5+filterNum))
-        pause
+%         pause
     end
 end
