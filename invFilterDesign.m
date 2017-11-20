@@ -3,8 +3,8 @@ close all;
 
 fileNames = {
 %'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
-'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
+%'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
+'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
 %'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
 };
 
@@ -162,37 +162,22 @@ for fileNum = 1:length(fileNames)
         gain = (-1)*maxErrors(maxAreaNum);
         fs=44100;
         
-        
-        disp('Start End Freq:')
-        disp(startEndFreq(maxAreaNum))
-        disp(startEndFreq(maxAreaNum+1))
-        disp('Kezdeti értékek: ')
-        disp ('fc: ')
-        disp(fc)
-        disp ('bw: ')
-        disp(bw)
-        
-        disp ('gain: ')
-        disp(gain)
+        fprintf('Frekvencia sáv: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
+        fprintf('fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
+       
         %pause
         % estimate parametric filter
-        [estGain,estFc,estBw,Ho,f] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp);
-        %[estGain,estFc,estBw,Ho,f] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
+        [estGain,estFc,estBw,~,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp);
+        [estGain,estFc,estBw,Ho,f] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
         % save filter parameters 
         if (filterNum == 1)
-            filters = [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
+            filters =  [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
         else
-            %[estGain,estFc,estBw,Ho,f] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
             filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
         end
         
         disp('A becslõ értékei: ')
-        disp ('estFc: ')
-        disp(estFc)
-        disp ('estBw: ')
-        disp(estBw)
-        disp ('estGain: ')
-        disp(estGain)
+        fprintf('estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
         disp('-------------------------')
         
         

@@ -24,6 +24,11 @@ function [Hb1,Hb2] = butterworthFilters(H_mic, f_interp,START_FREQ,END_FREQ)
         
     end
     
+    % if error bigger with filter then filter = 0
+    if (e > sum(abs(H_mic)))
+        Hb1 = zeros(1,length(f_interp));
+    end
+    
     % LPF:
     fcb2 = END_FREQ;
     [b,a] = butter(1,fcb2/(fs/2), 'low');
@@ -31,17 +36,23 @@ function [Hb1,Hb2] = butterworthFilters(H_mic, f_interp,START_FREQ,END_FREQ)
     Hb2 = 20*log10(abs(Hb2));
     
     e = sum(abs(H_mic+Hb1+Hb2));
-    
+    hiba = e;
     for i = 1:(length(freq)-1)
         f2 = freq(end-i); % lowpass filter cutoff freq
         [b,a] = butter(1,f2/(fs/2), 'low');
         [H2,f] = freqz(b,a,f_interp,fs);
         H2 = 20*log10(abs(H2));
-        
+       hiba = [hiba sum(abs(H_mic+Hb1+H2))];
         if(sum(abs(H_mic+Hb1+H2)) < e)
             e = sum(abs(H_mic+Hb1+H2));
             fcb2 = f2;
             Hb2 = H2;
         end 
     end
+    
+    % if error bigger with filter then filter = 0
+    if (e > sum(abs(H_mic+Hb1)))
+        Hb2 = zeros(1,length(f_interp));
+    end
+    
 end
