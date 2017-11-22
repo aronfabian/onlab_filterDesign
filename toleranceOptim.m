@@ -46,22 +46,18 @@ function [gain_dB,fc,bw_oct,Ho,f] = toleranceOptim( initGain, initFc, initBw, fs
         
         dif1 = tol_interp(upperMinPlace,1)- tol_interp(upperMinPlace,2);
         dif2 = tol_interp(lowerMinPlace,1)- tol_interp(lowerMinPlace,2);
-        if(dif1 > dif2)
-            delta_gain = 10;
-        else
-            delta_gain = 10;
-        end
+        delta_gain = 10;
         
-        dir = 1; % dir = 1 => bigger, dir = -1 => smaller
+        dir = 1; 
         % if upperMin > lowerMin and gain > 0 => gain has to be bigger
         if ((upperMin > lowerMin) && (gain_dB > 0))
             dir = 1;
         end
-        % if upperMin > lowerMin and gain < 0 => gain has to be smaller
+        % if upperMin > lowerMin and gain < 0 => abs(gain) has to be smaller
         if ((upperMin > lowerMin) && (gain_dB < 0))
             dir = 1;
         end
-        % if upperMin < lowerMin and gain < 0 => gain has to be bigger
+        % if upperMin < lowerMin and gain < 0 => abs(gain) has to be bigger
         if ((upperMin < lowerMin) && (gain_dB < 0))
             dir = -1;
         end
@@ -87,7 +83,7 @@ function [gain_dB,fc,bw_oct,Ho,f] = toleranceOptim( initGain, initFc, initBw, fs
         upperMin = abs(upperMin);
         
         n = n+1;
-        if (n == 1000)
+        if (n == 15)
             break
         end
          
