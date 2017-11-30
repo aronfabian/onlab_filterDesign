@@ -32,6 +32,10 @@ if nargin<3, bw = fs/10; end
 % a1 =  b1;
 % a2 =  (csp1 - Bc)*nrm;
 % v2
+
+% frequency wraping
+fc = fs*2*tan(fc*2*pi/(2*fs))/(2*pi);
+
 omega = 2 * pi * fc;
 Omega0 = atan(omega/2/fs)*2;
 gamma = sinh( log(2)/2*bw_oct*Omega0/sin(Omega0) ) * sin(Omega0);
@@ -49,11 +53,6 @@ A = [a0 a1 a2];
 B = [b0 b1 b2];
 
 
-% N = 2;
-% G  = 6; % 5 dB
-% Wo = 707/(fs/2);
-% BW = 1000/(fs/2);
-% [B1,A1] = designParamEQ(N1,G,Wo,BW);
 
 % [H,f]=freqz(B,A,65536,fs);
 
@@ -61,7 +60,7 @@ B = [b0 b1 b2];
 
 if nargout==0
   
-  [H,f]=freqz(B,A,65536,fs); % /l/mll/myfreqz.m
+  %[H,f]=freqz(B,A,65536,fs); % /l/mll/myfreqz.m
 %   figure(1); semilogx(f,20*log10(abs(H)))
   hold on; semilogx(f,20*log10(abs(H)))
 %   dstr=sprintf('boost(%0.2f,%0.2f,%0.2f,%0.2f)',g,fc,bw,fs);
@@ -69,4 +68,13 @@ if nargout==0
 %                       dstr],'fontsize',24);
 else 
     H_dB = 20*log10(abs(H));   
+
+% N = 2;
+% Wo = fc/(fs/2);
+% Q = sqrt(2^(0.25))/(2^(0.25)-1);
+% BW = Wo/Q;
+% [B,A] = designParamEQ(N,gain_dB,Wo,BW);
+% section1 = dsp.IIRFilter('Numerator',B(:,1)','Denominator',[1,A(:,1)']);
+% [H,f] = freqz(section1,COMP_FREQS,fs);
+% H_dB = 20*log10(abs(H));
 end
