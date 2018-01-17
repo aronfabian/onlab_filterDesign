@@ -1,32 +1,12 @@
 close all
 clear all
 
-START_FREQ = 100; % vizsgálati freki tartomány alja
-END_FREQ = 14000; % vizsgálati freki tartomány teteje
-COMP_FLINES = 1000; % az átviteli fgv számításakor használt felbontás
-PLOT_FLINES = 1000; % a megjelenítéshez használt felbontás
+main('config.mat');
 
-A_FILT = 1; % compensation with A-filter
-C_FILT = 0; % compensation with C-filter
-NO_FILT = 1; % no compensation
+function main(configFile)
 
-HPF_BUTTER = 1; % use highpass butterworth filter 
-LPF_BUTTER = 1; % use lowpass butterworth filter
-
-PAUSE = 0; % 0=run without pausing, 1 = run with pausing
-
-fileNames = {
-% 'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
-% 'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
-'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
-};
-
-main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,HPF_BUTTER,LPF_BUTTER,PAUSE,fileNames);
-
-function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,HPF_BUTTER,LPF_BUTTER,PAUSE,fileNames)
-
-
+    load(configFile)
+    
     f_interp = logspace(log10(START_FREQ),log10(END_FREQ),COMP_FLINES);
     f_interp_plot = logspace(log10(START_FREQ),log10(END_FREQ),PLOT_FLINES);
 
@@ -39,8 +19,8 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
         C_interp = interp1(C_weight(:,1), C_weight(:,2) , f_interp, 'pchip');
     end
     load('tolerance.mat');
-    tol_interp = interp1(tolerance(:,1), tolerance(:,2:3) , f_interp, 'pchip');
-    tol_interp_plot = interp1(tolerance(:,1), tolerance(:,2:3) , f_interp_plot, 'pchip');
+    tol_interp = (interp1(tolerance(:,1), tolerance(:,2:3) , f_interp, 'pchip'))';
+    tol_interp_plot = (interp1(tolerance(:,1), tolerance(:,2:3) , f_interp_plot, 'pchip'))';
 
     fileID = fopen('output.txt','w');
     fprintf(fileID,'Results:\n');
@@ -69,13 +49,17 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
                 break;
             end
             
+            figTitle = 0;
             switch filterType
                 case 1
                     fprintf('A szûrõ\n');
+                    figTitle = 'A weighted';
                 case 2
                     fprintf('C szûrõ\n');
+                    figTitle = 'C weighted';
                 case 3
-                fprintf('nincs szûrõ\n');
+                    fprintf('nincs szûrõ\n');
+                    figTitle = 'No weighting filter';
             end
                     
             
@@ -110,16 +94,16 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
             % H_mic számolása megjelenítéshez
             H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
-            H_trgt = zeros(length(f_interp),1);
-            H_trgt_plot = zeros(length(f_interp_plot),1);
+            H_trgt = zeros(1,length(f_interp));
+            H_trgt_plot = zeros(1,length(f_interp_plot));
             figure()
             semilogx(f_interp_plot,H_mic_plot)
-            title(fileNames{fileNum},'Interpreter', 'none')
+            title({fileNames{fileNum}; figTitle},'Interpreter', 'none')
             xlabel('Frequency (Hz)')
             ylabel('Magnitude (dB)')
             hold on
             semilogx(f_interp_plot,H_trgt_plot)
-            semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
+            semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
             leg = {'H_{mic}original';'H_{trgt}';'tolerance band';'';'Butterworth filters'};
             legend(leg(1:3))
 
@@ -127,7 +111,7 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
 
             % Butterworth Filters
             if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
-                [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,START_FREQ,END_FREQ);
+                [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,START_FREQ,END_FREQ,tol_interp,H_trgt);
                 if(HPF_BUTTER == 0)
                     Hb1 = zeros(1,length(f_interp));
                 else
@@ -160,7 +144,7 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
                 if (filterNum > 2)
                     for i = 1:filterNum-1
                         [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
-                        [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp);
+                        [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                         H_mic = H_mic - H1 + H2;
                     end
                 end
@@ -175,9 +159,10 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
 
                 % error areas
                 errorAreas = zeros(areaNum,1);
-                error = H_mic' - H_trgt;
+%                 error = H_mic - H_trgt;
                 for i = 1:areaNum
-                    errorAreas(i) = sum(abs(error(startEnd(i):startEnd(i+1))));
+%                     errorAreas(i) = sum(abs(error(startEnd(i):startEnd(i+1))));
+                    [errorAreas(i),~] = errorCalc(H_mic(startEnd(i):startEnd(i+1)),H_trgt(startEnd(i):startEnd(i+1)),tol_interp(:,startEnd(i):startEnd(i+1)),configFile);
                 end
 
                 % maximum errors
@@ -194,7 +179,7 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
                     maxErrorsFreq(i) =  f_interp(maxErrorsPlace(i));
                     % if a maximum error of an error area is inside the tolerance
                     % band, error area will be 0 (it's good enough)
-                    if (isempty(find((H_mic(startEnd(i):startEnd(i+1)) > tol_interp(startEnd(i):startEnd(i+1),1)') | (H_mic(startEnd(i):startEnd(i+1)) < tol_interp(startEnd(i):startEnd(i+1),2)'), 1)))
+                    if (isempty(find((H_mic(startEnd(i):startEnd(i+1)) > tol_interp(1,startEnd(i):startEnd(i+1))) | (H_mic(startEnd(i):startEnd(i+1)) < tol_interp(2,startEnd(i):startEnd(i+1))), 1)))
                          errorAreas(i) = 0;
                     end
                 end
@@ -207,16 +192,20 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
                     figure
                     H_mic_o_plot = interp1(f_interp, H_mic_origin, f_interp_plot, 'pchip');
                     semilogx(f_interp_plot,H_mic_o_plot)
-                    title('Original and final transfer, Filters')
+                    title({'Original and final transfer, Filters';figTitle})
                     hold on
-                    semilogx(f_interp_plot,tol_interp_plot(:,1:2),'r--')
+                    semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
                     legend( [leg(1); leg(3:4)])
-                    Hb1_plot = interp1(f_interp,Hb1,f_interp_plot,'pchip');
-                    Hb2_plot = interp1(f_interp,Hb2,f_interp_plot,'pchip');
-                    semilogx(f_interp_plot,Hb1_plot,'DisplayName', 'Butterworth HPF')
-                    semilogx(f_interp_plot,Hb2_plot,'DisplayName', 'Butterworth LPF')
-                    H_mic_o_plot = H_mic_o_plot+Hb1_plot+Hb2_plot;
-
+                    if(HPF_BUTTER == 1)
+                        Hb1_plot = interp1(f_interp,Hb1,f_interp_plot,'pchip');
+                        semilogx(f_interp_plot,Hb1_plot,'DisplayName', 'Butterworth HPF')
+                        H_mic_o_plot = H_mic_o_plot+Hb1_plot;
+                    end
+                    if(LPF_BUTTER == 1)
+                        Hb2_plot = interp1(f_interp,Hb2,f_interp_plot,'pchip');
+                        semilogx(f_interp_plot,Hb2_plot,'DisplayName', 'Butterworth LPF')
+                        H_mic_o_plot = H_mic_o_plot+Hb2_plot;
+                    end         
 
                     for i = 1:size(filters,1)
                         [He,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
@@ -249,8 +238,8 @@ function main(START_FREQ,END_FREQ,COMP_FLINES,PLOT_FLINES,A_FILT,C_FILT,NO_FILT,
 
                     %pause
                     % estimate parametric filter
-                    [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp);
-                    [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp);
+                    [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
+                    [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
 %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
 %                     semilogx(f,Ho,'DisplayName', string(filterNum))
                     % save filter parameters 
