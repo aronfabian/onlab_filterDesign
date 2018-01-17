@@ -1,0 +1,476 @@
+
+*********************************************************************************
+*********************************************************************************
+HPF, LPF = 0
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.07 dB, fc: 54.2 Hz, bandwidth: 4.4464 octave
+		Parametric Filter 2: gain: -8.74 dB, fc: 3259.4 Hz, bandwidth: 0.7517 octave
+		Parametric Filter 3: gain: -13.16 dB, fc: 15600.0 Hz, bandwidth: 0.2854 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.49 dB, fc: 54.2 Hz, bandwidth: 4.1218 octave
+		Parametric Filter 2: gain: -8.57 dB, fc: 3368.8 Hz, bandwidth: 0.7828 octave
+		Parametric Filter 3: gain: -9.71 dB, fc: 15600.0 Hz, bandwidth: 0.4533 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.48 dB, fc: 57.1 Hz, bandwidth: 3.9599 octave
+		Parametric Filter 2: gain: -8.73 dB, fc: 3361.4 Hz, bandwidth: 0.7833 octave
+		Parametric Filter 3: gain: -10.18 dB, fc: 15600.0 Hz, bandwidth: 0.4186 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.45 dB, fc: 54.2 Hz, bandwidth: 4.1412 octave
+		Parametric Filter 2: gain: -8.01 dB, fc: 3376.3 Hz, bandwidth: 0.9492 octave
+		Parametric Filter 3: gain: -14.35 dB, fc: 15600.0 Hz, bandwidth: 0.2374 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.52 dB, fc: 57.1 Hz, bandwidth: 3.9036 octave
+		Parametric Filter 2: gain: -8.23 dB, fc: 3244.1 Hz, bandwidth: 0.8925 octave
+		Parametric Filter 3: gain: -11.51 dB, fc: 15600.0 Hz, bandwidth: 0.3472 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.56 dB, fc: 57.1 Hz, bandwidth: 3.8729 octave
+		Parametric Filter 2: gain: -7.54 dB, fc: 3361.4 Hz, bandwidth: 1.0487 octave
+		Parametric Filter 3: gain: -11.72 dB, fc: 15600.0 Hz, bandwidth: 0.3018 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.36 dB, fc: 50.0 Hz, bandwidth: 4.5035 octave
+		Parametric Filter 2: gain: -8.92 dB, fc: 3376.3 Hz, bandwidth: 0.7702 octave
+		Parametric Filter 3: gain: -12.64 dB, fc: 15600.0 Hz, bandwidth: 0.2978 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.47 dB, fc: 57.1 Hz, bandwidth: 3.9416 octave
+		Parametric Filter 2: gain: -7.95 dB, fc: 3228.8 Hz, bandwidth: 0.9470 octave
+		Parametric Filter 3: gain: -12.50 dB, fc: 15600.0 Hz, bandwidth: 0.3018 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.42 dB, fc: 57.1 Hz, bandwidth: 3.9874 octave
+		Parametric Filter 2: gain: -8.59 dB, fc: 3236.4 Hz, bandwidth: 0.8270 octave
+		Parametric Filter 3: gain: -11.97 dB, fc: 15117.8 Hz, bandwidth: 0.2738 octave
+		Parametric Filter 4: gain: -6.62 dB, fc: 15600.0 Hz, bandwidth: 0.0498 octave
+		Parametric Filter 5: gain: -2.11 dB, fc: 13280.6 Hz, bandwidth: 0.4976 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Parametric Filter 1: gain: -10.52 dB, fc: 54.2 Hz, bandwidth: 4.1242 octave
+		Parametric Filter 2: gain: -8.19 dB, fc: 3251.7 Hz, bandwidth: 0.8957 octave
+		Parametric Filter 3: gain: -12.56 dB, fc: 15600.0 Hz, bandwidth: 0.3027 octave
+
+*********************************************************************************
+*********************************************************************************
+HPF = 1, LPF = 0
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.82 dB, fc: 3302.5 Hz, bandwidth: 0.9805 octave
+		Parametric Filter 2: gain: -11.40 dB, fc: 15600.0 Hz, bandwidth: 0.3480 octave
+		Parametric Filter 3: gain: 3.35 dB, fc: 53.0 Hz, bandwidth: 0.7595 octave
+		Parametric Filter 4: gain: -1.43 dB, fc: 206.8 Hz, bandwidth: 1.4197 octave
+		Parametric Filter 5: gain: 2.09 dB, fc: 212.0 Hz, bandwidth: 1.5966 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.80 dB, fc: 3173.6 Hz, bandwidth: 0.9742 octave
+		Parametric Filter 2: gain: -10.71 dB, fc: 15600.0 Hz, bandwidth: 0.3896 octave
+		Parametric Filter 3: gain: 3.58 dB, fc: 50.0 Hz, bandwidth: 0.6340 octave
+		Parametric Filter 4: gain: -1.57 dB, fc: 226.0 Hz, bandwidth: 2.1365 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.95 dB, fc: 3302.5 Hz, bandwidth: 0.9355 octave
+		Parametric Filter 2: gain: -9.84 dB, fc: 15600.0 Hz, bandwidth: 0.4373 octave
+		Parametric Filter 3: gain: 3.81 dB, fc: 50.0 Hz, bandwidth: 0.6521 octave
+		Parametric Filter 4: gain: -0.59 dB, fc: 206.8 Hz, bandwidth: 2.5130 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.82 dB, fc: 3173.6 Hz, bandwidth: 0.9408 octave
+		Parametric Filter 2: gain: -9.89 dB, fc: 15600.0 Hz, bandwidth: 0.4398 octave
+		Parametric Filter 3: gain: 4.21 dB, fc: 50.0 Hz, bandwidth: 0.5535 octave
+		Parametric Filter 4: gain: -1.53 dB, fc: 238.3 Hz, bandwidth: 2.1351 octave
+		Parametric Filter 5: gain: -1.22 dB, fc: 202.1 Hz, bandwidth: 1.3657 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -8.75 dB, fc: 3442.1 Hz, bandwidth: 0.7906 octave
+		Parametric Filter 2: gain: -12.61 dB, fc: 15600.0 Hz, bandwidth: 0.2997 octave
+		Parametric Filter 3: gain: -1.76 dB, fc: 330.1 Hz, bandwidth: 1.1910 octave
+		Parametric Filter 4: gain: 3.15 dB, fc: 50.0 Hz, bandwidth: 1.0832 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.58 dB, fc: 3173.6 Hz, bandwidth: 1.0460 octave
+		Parametric Filter 2: gain: -10.94 dB, fc: 15124.5 Hz, bandwidth: 0.3193 octave
+		Parametric Filter 3: gain: 3.83 dB, fc: 50.0 Hz, bandwidth: 0.2898 octave
+		Parametric Filter 4: gain: -1.01 dB, fc: 208.0 Hz, bandwidth: 1.3782 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.83 dB, fc: 3168.5 Hz, bandwidth: 0.9561 octave
+		Parametric Filter 2: gain: -11.99 dB, fc: 15600.0 Hz, bandwidth: 0.3250 octave
+		Parametric Filter 3: gain: 3.96 dB, fc: 50.0 Hz, bandwidth: 0.6217 octave
+		Parametric Filter 4: gain: -1.11 dB, fc: 226.6 Hz, bandwidth: 2.9925 octave
+		Parametric Filter 5: gain: -2.27 dB, fc: 205.7 Hz, bandwidth: 0.7369 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -8.42 dB, fc: 3302.5 Hz, bandwidth: 0.8446 octave
+		Parametric Filter 2: gain: -10.07 dB, fc: 15276.9 Hz, bandwidth: 0.3932 octave
+		Parametric Filter 3: gain: 4.11 dB, fc: 50.0 Hz, bandwidth: 0.5850 octave
+		Parametric Filter 4: gain: -1.46 dB, fc: 260.4 Hz, bandwidth: 2.8870 octave
+		Parametric Filter 5: gain: -0.44 dB, fc: 210.4 Hz, bandwidth: 2.4466 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -9.02 dB, fc: 3302.5 Hz, bandwidth: 0.7969 octave
+		Parametric Filter 2: gain: -8.35 dB, fc: 15117.8 Hz, bandwidth: 0.4712 octave
+		Parametric Filter 3: gain: 6.53 dB, fc: 13531.6 Hz, bandwidth: 0.9828 octave
+		Parametric Filter 4: gain: 4.12 dB, fc: 50.0 Hz, bandwidth: 0.5855 octave
+		Parametric Filter 5: gain: -1.27 dB, fc: 248.5 Hz, bandwidth: 2.8277 octave
+		Parametric Filter 6: gain: -1.43 dB, fc: 204.5 Hz, bandwidth: 1.7062 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Parametric Filter 1: gain: -7.96 dB, fc: 3173.6 Hz, bandwidth: 0.9527 octave
+		Parametric Filter 2: gain: -13.23 dB, fc: 15437.6 Hz, bandwidth: 0.2518 octave
+		Parametric Filter 3: gain: 3.91 dB, fc: 50.0 Hz, bandwidth: 0.6387 octave
+		Parametric Filter 4: gain: -1.71 dB, fc: 226.0 Hz, bandwidth: 2.3320 octave
+		Parametric Filter 5: gain: -1.20 dB, fc: 204.5 Hz, bandwidth: 0.9805 octave
+
+*********************************************************************************
+*********************************************************************************
+HPF = 0, LPF = 1
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.33 dB, fc: 57.1 Hz, bandwidth: 4.0714 octave
+		Parametric Filter 2: gain: -9.08 dB, fc: 3238.8 Hz, bandwidth: 0.7069 octave
+		Parametric Filter 3: gain: 4.86 dB, fc: 9281.0 Hz, bandwidth: 0.5363 octave
+		Parametric Filter 4: gain: -3.16 dB, fc: 15600.0 Hz, bandwidth: 0.4479 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.39 dB, fc: 57.1 Hz, bandwidth: 4.0137 octave
+		Parametric Filter 2: gain: -8.98 dB, fc: 3231.7 Hz, bandwidth: 0.7383 octave
+		Parametric Filter 3: gain: 4.97 dB, fc: 8702.0 Hz, bandwidth: 0.5219 octave
+		Parametric Filter 4: gain: -3.00 dB, fc: 15600.0 Hz, bandwidth: 0.3898 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.27 dB, fc: 54.0 Hz, bandwidth: 4.3044 octave
+		Parametric Filter 2: gain: -9.04 dB, fc: 3238.8 Hz, bandwidth: 0.7298 octave
+		Parametric Filter 3: gain: 5.13 dB, fc: 7965.4 Hz, bandwidth: 0.4122 octave
+		Parametric Filter 4: gain: -2.54 dB, fc: 15600.0 Hz, bandwidth: 0.3566 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.53 dB, fc: 54.0 Hz, bandwidth: 4.0988 octave
+		Parametric Filter 2: gain: -8.73 dB, fc: 3238.8 Hz, bandwidth: 0.7945 octave
+		Parametric Filter 3: gain: 5.05 dB, fc: 8120.7 Hz, bandwidth: 0.5243 octave
+		Parametric Filter 4: gain: -2.86 dB, fc: 15600.0 Hz, bandwidth: 0.3649 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.71 dB, fc: 57.1 Hz, bandwidth: 3.7804 octave
+		Parametric Filter 2: gain: -8.98 dB, fc: 3246.0 Hz, bandwidth: 0.7085 octave
+		Parametric Filter 3: gain: 5.33 dB, fc: 8490.4 Hz, bandwidth: 0.3741 octave
+		Parametric Filter 4: gain: -2.71 dB, fc: 15600.0 Hz, bandwidth: 0.3566 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.60 dB, fc: 57.1 Hz, bandwidth: 3.8701 octave
+		Parametric Filter 2: gain: -10.92 dB, fc: 3342.6 Hz, bandwidth: 0.5900 octave
+		Parametric Filter 3: gain: 4.16 dB, fc: 8325.6 Hz, bandwidth: 0.6276 octave
+		Parametric Filter 4: gain: -5.74 dB, fc: 15600.0 Hz, bandwidth: 0.0996 octave
+		Parametric Filter 5: gain: 2.73 dB, fc: 3380.8 Hz, bandwidth: 0.1243 octave
+		Parametric Filter 6: gain: 2.56 dB, fc: 3380.8 Hz, bandwidth: 0.0817 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.14 dB, fc: 57.1 Hz, bandwidth: 4.2111 octave
+		Parametric Filter 2: gain: -8.88 dB, fc: 3246.0 Hz, bandwidth: 0.7750 octave
+		Parametric Filter 3: gain: 4.84 dB, fc: 7965.4 Hz, bandwidth: 0.5361 octave
+		Parametric Filter 4: gain: -2.75 dB, fc: 15600.0 Hz, bandwidth: 0.3649 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.28 dB, fc: 54.0 Hz, bandwidth: 4.3044 octave
+		Parametric Filter 2: gain: -8.95 dB, fc: 3246.0 Hz, bandwidth: 0.7402 octave
+		Parametric Filter 3: gain: 4.88 dB, fc: 8511.7 Hz, bandwidth: 0.5430 octave
+		Parametric Filter 4: gain: -2.99 dB, fc: 15600.0 Hz, bandwidth: 0.3898 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.52 dB, fc: 54.0 Hz, bandwidth: 4.0843 octave
+		Parametric Filter 2: gain: -9.08 dB, fc: 3238.8 Hz, bandwidth: 0.7073 octave
+		Parametric Filter 3: gain: 5.22 dB, fc: 8303.5 Hz, bandwidth: 0.3958 octave
+		Parametric Filter 4: gain: -2.70 dB, fc: 15600.0 Hz, bandwidth: 0.3566 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.25 dB, fc: 57.1 Hz, bandwidth: 4.1311 octave
+		Parametric Filter 2: gain: -8.91 dB, fc: 3238.8 Hz, bandwidth: 0.7280 octave
+		Parametric Filter 3: gain: 5.28 dB, fc: 8702.0 Hz, bandwidth: 0.4170 octave
+		Parametric Filter 4: gain: -2.85 dB, fc: 15600.0 Hz, bandwidth: 0.3732 octave
+
+*********************************************************************************
+*********************************************************************************
+HPF, LPF = 1
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.54 dB, fc: 3301.5 Hz, bandwidth: 0.8335 octave
+		Parametric Filter 2: gain: 5.21 dB, fc: 8263.2 Hz, bandwidth: 0.5683 octave
+		Parametric Filter 3: gain: 4.00 dB, fc: 50.0 Hz, bandwidth: 0.5768 octave
+		Parametric Filter 4: gain: -1.56 dB, fc: 247.7 Hz, bandwidth: 2.8190 octave
+		Parametric Filter 5: gain: -1.36 dB, fc: 204.5 Hz, bandwidth: 1.0786 octave
+		Parametric Filter 6: gain: -2.99 dB, fc: 15600.0 Hz, bandwidth: 0.3815 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.50 dB, fc: 3175.0 Hz, bandwidth: 0.8296 octave
+		Parametric Filter 2: gain: 5.09 dB, fc: 8649.6 Hz, bandwidth: 0.4968 octave
+		Parametric Filter 3: gain: 3.82 dB, fc: 50.0 Hz, bandwidth: 0.6065 octave
+		Parametric Filter 4: gain: -1.18 dB, fc: 226.6 Hz, bandwidth: 2.7994 octave
+		Parametric Filter 5: gain: -2.12 dB, fc: 205.7 Hz, bandwidth: 0.8535 octave
+		Parametric Filter 6: gain: -2.92 dB, fc: 15600.0 Hz, bandwidth: 0.3898 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.36 dB, fc: 3155.4 Hz, bandwidth: 0.8700 octave
+		Parametric Filter 2: gain: 4.88 dB, fc: 8731.5 Hz, bandwidth: 0.6015 octave
+		Parametric Filter 3: gain: 4.61 dB, fc: 50.0 Hz, bandwidth: 0.3992 octave
+		Parametric Filter 4: gain: -1.66 dB, fc: 206.8 Hz, bandwidth: 1.2346 octave
+		Parametric Filter 5: gain: -3.14 dB, fc: 15600.0 Hz, bandwidth: 0.4147 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.45 dB, fc: 3301.5 Hz, bandwidth: 0.8781 octave
+		Parametric Filter 2: gain: 5.09 dB, fc: 8031.4 Hz, bandwidth: 0.5906 octave
+		Parametric Filter 3: gain: 4.08 dB, fc: 50.0 Hz, bandwidth: 0.5871 octave
+		Parametric Filter 4: gain: -1.70 dB, fc: 237.6 Hz, bandwidth: 2.7754 octave
+		Parametric Filter 5: gain: -0.57 dB, fc: 204.5 Hz, bandwidth: 2.3131 octave
+		Parametric Filter 6: gain: -2.88 dB, fc: 15600.0 Hz, bandwidth: 0.3732 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.58 dB, fc: 3301.5 Hz, bandwidth: 0.7775 octave
+		Parametric Filter 2: gain: 6.88 dB, fc: 8690.5 Hz, bandwidth: 0.3278 octave
+		Parametric Filter 3: gain: 4.03 dB, fc: 50.0 Hz, bandwidth: 0.6115 octave
+		Parametric Filter 4: gain: -1.91 dB, fc: 236.9 Hz, bandwidth: 2.7982 octave
+		Parametric Filter 5: gain: -1.67 dB, fc: 224.4 Hz, bandwidth: 2.2272 octave
+		Parametric Filter 6: gain: -2.75 dB, fc: 15600.0 Hz, bandwidth: 0.3566 octave
+		Parametric Filter 7: gain: -1.57 dB, fc: 8678.9 Hz, bandwidth: 0.1952 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -10.21 dB, fc: 3301.5 Hz, bandwidth: 0.7122 octave
+		Parametric Filter 2: gain: 4.68 dB, fc: 8662.3 Hz, bandwidth: 0.5288 octave
+		Parametric Filter 3: gain: -1.63 dB, fc: 265.4 Hz, bandwidth: 1.0047 octave
+		Parametric Filter 4: gain: 3.56 dB, fc: 51.0 Hz, bandwidth: 0.9420 octave
+		Parametric Filter 5: gain: -5.75 dB, fc: 15600.0 Hz, bandwidth: 0.0975 octave
+		Parametric Filter 6: gain: 0.55 dB, fc: 3323.0 Hz, bandwidth: 0.0761 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -9.02 dB, fc: 3301.5 Hz, bandwidth: 0.6725 octave
+		Parametric Filter 2: gain: 1.04 dB, fc: 8303.5 Hz, bandwidth: 0.4206 octave
+		Parametric Filter 3: gain: -1.78 dB, fc: 330.1 Hz, bandwidth: 1.2043 octave
+		Parametric Filter 4: gain: 3.55 dB, fc: 50.0 Hz, bandwidth: 1.0247 octave
+		Parametric Filter 5: gain: -1.02 dB, fc: 15600.0 Hz, bandwidth: 0.2969 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.58 dB, fc: 3301.5 Hz, bandwidth: 0.8538 octave
+		Parametric Filter 2: gain: 4.88 dB, fc: 7894.1 Hz, bandwidth: 0.5962 octave
+		Parametric Filter 3: gain: 4.00 dB, fc: 50.0 Hz, bandwidth: 0.6137 octave
+		Parametric Filter 4: gain: -1.72 dB, fc: 236.2 Hz, bandwidth: 2.8320 octave
+		Parametric Filter 5: gain: -0.51 dB, fc: 205.5 Hz, bandwidth: 2.4632 octave
+		Parametric Filter 6: gain: -2.76 dB, fc: 15600.0 Hz, bandwidth: 0.3732 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.72 dB, fc: 3301.5 Hz, bandwidth: 0.8420 octave
+		Parametric Filter 2: gain: 4.77 dB, fc: 7917.4 Hz, bandwidth: 0.6461 octave
+		Parametric Filter 3: gain: 4.01 dB, fc: 50.0 Hz, bandwidth: 0.5959 octave
+		Parametric Filter 4: gain: -1.59 dB, fc: 236.2 Hz, bandwidth: 2.7850 octave
+		Parametric Filter 5: gain: -1.25 dB, fc: 204.5 Hz, bandwidth: 1.2214 octave
+		Parametric Filter 6: gain: -2.84 dB, fc: 15600.0 Hz, bandwidth: 0.3815 octave
+
+**
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 268.9 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -8.53 dB, fc: 3301.5 Hz, bandwidth: 0.8162 octave
+		Parametric Filter 2: gain: 5.23 dB, fc: 8661.0 Hz, bandwidth: 0.5040 octave
+		Parametric Filter 3: gain: 4.21 dB, fc: 50.0 Hz, bandwidth: 0.5363 octave
+		Parametric Filter 4: gain: -1.61 dB, fc: 239.0 Hz, bandwidth: 2.8556 octave
+		Parametric Filter 5: gain: -0.77 dB, fc: 204.5 Hz, bandwidth: 2.0566 octave
+		Parametric Filter 6: gain: -2.97 dB, fc: 15600.0 Hz, bandwidth: 0.3898 octave

@@ -111,7 +111,7 @@ function main(configFile)
 
             % Butterworth Filters
             if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
-                [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,START_FREQ,END_FREQ,tol_interp,H_trgt);
+                [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
                 if(HPF_BUTTER == 0)
                     Hb1 = zeros(1,length(f_interp));
                 else

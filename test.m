@@ -1,50 +1,41 @@
-%% Generate and plot responses
-fs = 44100; 
+clear all
+clc
 
-% Speaker response 
-[Ho,f]=parametricEQ(6,1000,2,fs);
-[H1,f]=parametricEQ(-4,7000,1/2,fs);
-[H3,f]=parametricEQ(4.5,8000,1/2,fs);
-[H2,f]=parametricEQ(-5,16000,1/2,fs);
-[H4,f]=parametricEQ(1,200,1,fs);
-[H5,f]=parametricEQ(2,20000,1,fs);
+ fileIDW = fopen('results.txt','w');fclose(fileIDW);
+for i = 1:4
+     text = fileread('results.txt');
+     fileIDW = fopen('results.txt','w');
+    switch(i)
+        case 1
+            hpf = 0;
+            lpf = 0;
+            fprintf(fileIDW,[text,'\n*********************************************************************************\n*********************************************************************************','\nHPF, LPF = 0\n']);
+        case 2 
+            hpf = 1;
+            lpf = 0;
+            fprintf(fileIDW,[text,'\n*********************************************************************************\n*********************************************************************************','\nHPF = 1, LPF = 0\n']);
+        case 3
+            hpf = 0;
+            lpf = 1;
+            fprintf(fileIDW,[text,'\n*********************************************************************************\n*********************************************************************************','\nHPF = 0, LPF = 1\n']);
+        case 4
+            hpf = 1;
+            lpf = 1;
 
-H_spk = Ho+H1+H2+H3+H4+H5;
-
-% Target response
-[H_trgt,f]=parametricEQ(0,1000,100,fs);
-
-% plot
-figure(1)
-semilogx(f, [H_spk H_trgt])
-axis([10 30000 -10 10])
-title('Speaker and target responses')
-legend('H-speaker', 'H-target')
-xlabel('frequency [Hz]')
-ylabel('gain [dB]')
-
-%% Calc
-
-% Error areas
-cross = zeros(size(f,1),1);
-areaNum = 1;
-for i = 2:size(f,1)
-    if ((H_spk(i) > H_trgt(i)) && (H_spk(i-1) < H_trgt(i-1)))
-        cross(i)=1;
-        areaNum = areaNum + 1;
+            fprintf(fileIDW,[text,'\n*********************************************************************************\n*********************************************************************************','\nHPF, LPF = 1\n']);
     end
-    if ((H_spk(i) < H_trgt(i)) && (H_spk(i-1) > H_trgt(i-1)))
-        cross(i)=1;
-        areaNum = areaNum + 1;
+    fclose(fileIDW);
+    
+    
+    configtest(hpf,lpf)
+    
+    for n = 1:10
+        invFilterDesign;
+        text1 = fileread('output.txt');
+        text2 = fileread('results.txt');
+        fileIDW = fopen('results.txt','w');
+        fprintf(fileIDW,[text2,'\n**\n',text1]);
+        fclose(fileIDW);
+        
     end
-end
-
-errorAreas = zeros(areaNum,1);
-
-m = 1;
-for i = 1:size(f,1)
-    if (cross(i) == 1)
-        m = m + 1;
-    end
-    errorAreas(m) = errorAreas(m) + (H_spk(i) - H_trgt(i));
 end
