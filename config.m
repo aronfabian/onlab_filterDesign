@@ -15,9 +15,9 @@ LPF_BUTTER = 0; % use lowpass butterworth filter
 PAUSE = 1; % 0=run without pausing, 1 = run with pausing
 
 fileNames = {
-% 'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
-%'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
-% 'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
+ 'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
+'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
+ 'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
 'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
 };
 

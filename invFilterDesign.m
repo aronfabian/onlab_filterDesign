@@ -1,6 +1,7 @@
 close all
 clear all
 
+config();
 main('config.mat');
 
 function main(configFile)
