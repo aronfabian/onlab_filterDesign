@@ -29,7 +29,7 @@ for i = 1:4
     
     configtest(hpf,lpf)
     
-    for n = 1:10
+    for n = 1:15
         invFilterDesign;
         text1 = fileread('output.txt');
         text2 = fileread('results.txt');
