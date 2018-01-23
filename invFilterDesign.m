@@ -1,4 +1,4 @@
-close all
+% close all
 clear all
 
 config();
@@ -147,6 +147,7 @@ function main(configFile)
                         [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
                         [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                         H_mic = H_mic - H1 + H2;
+                        fprintf('Finomhangolás (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
                     end
                 end
 
@@ -235,11 +236,12 @@ function main(configFile)
                     fs=44100;
 
                     fprintf('Frekvencia sáv: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
-                    fprintf('fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
+                    fprintf('Kezdeti értékek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
 
                     %pause
                     % estimate parametric filter
                     [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
+                    fprintf('A becslõ értékei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                     [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
 %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
 %                     semilogx(f,Ho,'DisplayName', string(filterNum))
@@ -250,8 +252,8 @@ function main(configFile)
                         filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1)];
                     end
 
-                    disp('A becslõ értékei: ')
-                    fprintf('estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+%                     disp('A becslõ értékei: ')
+                    fprintf('Tol. sávba optimalizált: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                     disp('-------------------------')
 
 

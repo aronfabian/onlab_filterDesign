@@ -1,0 +1,6 @@
+Results:
+-------------------------------------------
+CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+	A weighted
+		Butterworth HPF cutoff freq: 285.0 Hz
+		Butterworth LPF cutoff freq: 9807.9 Hz
