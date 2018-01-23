@@ -1,9 +1,10 @@
-function [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs,COMP_FREQS);
-%BOOST - Design a digital boost filter at given gain g, 
+function [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs,COMP_FREQS)
+% [H_dB,f] = parametricEQ(gain_dB,fc,bw_oct,fs,COMP_FREQS)
+% Designs a digital boost filter at given gain_dB, 
 %        center frequency fc in Hz,
-%        bandwidth bw in Hz (default = fs/10), and
-%        bandwidth bw in octaves (default = fs/10), and
-%        sampling rate fs in Hz (default = 1).
+%        bandwidth bw_oct in octaves (default = fs/10),
+%        sampling rate fs in Hz (default = 1), and
+% and returns the transfer function at COMP_FREQS frequencies in Hz.
 
 
 % % Példa
