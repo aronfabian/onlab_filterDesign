@@ -14,7 +14,7 @@ switch(ERROR_SEL)
     case 2
         errorArea = sum((H_mic-H_trgt).^2);
     case 3
-        errorArea = sum(H_mic((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:))) - H_trgt((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:)))); 
+        errorArea = sum(abs(H_mic((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:))) - H_trgt((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:))))); 
     case 4
         errorArea = sum((H_mic((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:))) - H_trgt((H_mic > tol_interp(1,:)) | (H_mic < tol_interp(2,:)))).^2); 
 end

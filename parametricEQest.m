@@ -1,11 +1,11 @@
-function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain, initFc, initBw, fs, H_mic, startF, endF, f_interp, H_trgt, tol_interp, configFile)
+function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain_dB, initFc, initBw, fs, H_mic, startF, endF, f_interp, H_trgt, tol_interp, configFile)
 %parametricEQest - Estimate the parameters of the filter
 %
     load(configFile)
 
 %     e = sum(abs(H_mic));
     [eA,eT] = errorCalc(H_mic,H_trgt,tol_interp,configFile);
-    gain_dB = initGain;
+    gain_dB = initGain_dB;
     fc = initFc;
     bw_oct = initBw;
     
@@ -27,8 +27,9 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain, initFc, initBw, f
             for j = 1:OUTER_LOOP
                 % fc calibration: from start freq to end freq (uniform (continuous) distribution)
                 for i = 1:INNER_LOOP
-                    freq = logspace(log10(startF),log10(endF),40);
-                    param = freq(randi(length(freq)));
+%                     freq = logspace(log10(startF),log10(endF),40);
+%                     param = freq(randi(length(freq)));
+                    param = startF * (endF/startF)^rand;
                     [Ho,~]=parametricEQ(gain_dB,param,bw_oct,fs,f_interp);
         %             if (sum(abs(H_mic+Ho)) < e)
         %                 e = sum(abs(H_mic+Ho));
@@ -45,20 +46,21 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain, initFc, initBw, f
                 end
                 % gain calibration: form 0.15*MaxGain to 1.15*MaxGain (MaxGain = initGain)
                 for i = 1:INNER_LOOP
-                    param = rand + 0.15;
-                    [Ho,~]=parametricEQ(initGain*param,fc,bw_oct,fs,f_interp);
+%                     param = rand + 0.15;
+                    param = 12 * rand - 6;
+                    [Ho,~]=parametricEQ(initGain_dB+param,fc,bw_oct,fs,f_interp);
         %             if (sum(abs(H_mic+Ho)) < e)
         %                 e = sum(abs(H_mic+Ho));
         %                 gain_dB = initGain*param;
         %             end
                     [eA_new,eT_new] = errorCalc(H_mic+Ho,H_trgt,tol_interp,configFile);
-        %             if(eT_new < eT)
+                    if(eT_new < eT)
                         if(eA_new < eA)
                             eA = eA_new;
-        %                     eT = eT_new;
-                            gain_dB = initGain*param;
+                            eT = eT_new;
+                            gain_dB = initGain_dB+param;
                         end
-        %             end
+                    end
                 end
                 % bw calibration:  form 0.2*initBw to 1.2*initBw (initBw = bandwidth of the error area)
                 for i = 1:INNER_LOOP
@@ -86,8 +88,10 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain, initFc, initBw, f
                 switch(paramSel)
                 % fc calibration: from start freq to end freq (uniform (continuous) distribution)
                     case 1
-                        freq = logspace(log10(startF),log10(endF),40);
-                        param = freq(randi(length(freq)));
+%                         freq = logspace(log10(startF),log10(endF),40);
+%                         param = freq(randi(length(freq)));
+                        param = startF * (endF/startF)^rand;
+%                         fprintf('f=%0.0f, ',param);
                         [Ho,~]=parametricEQ(gain_dB,param,bw_oct,fs,f_interp);
             %             if (sum(abs(H_mic+Ho)) < e)
             %                 e = sum(abs(H_mic+Ho));
@@ -102,22 +106,25 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain, initFc, initBw, f
                             end
                         end
 
-                % gain calibration: form 0.15*MaxGain to 1.15*MaxGain (MaxGain = initGain)
+                % gain calibration: from 0.15*MaxGain to 1.15*MaxGain (MaxGain = initGain)
+                % gain calibration: from -6 to +6 dB of initGain
                     case 2
-                        param = rand + 0.15;
-                        [Ho,~]=parametricEQ(initGain*param,fc,bw_oct,fs,f_interp);
+                        param = 12 * rand - 6;
+%                         param = rand + 0.15;
+%                         fprintf('A=%0.0f, ',param)
+                        [Ho,~]=parametricEQ(initGain_dB+param,fc,bw_oct,fs,f_interp);
             %             if (sum(abs(H_mic+Ho)) < e)
             %                 e = sum(abs(H_mic+Ho));
             %                 gain_dB = initGain*param;
             %             end
                         [eA_new,eT_new] = errorCalc(H_mic+Ho,H_trgt,tol_interp,configFile);
-            %             if(eT_new < eT)
+                        if(eT_new < eT)
                             if(eA_new < eA)
                                 eA = eA_new;
-            %                     eT = eT_new;
-                                gain_dB = initGain*param;
+                                eT = eT_new;
+                                gain_dB = initGain_dB+param;
                             end
-            %             end
+                        end
 
                 % bw calibration:  form 0.2*initBw to 1.2*initBw (initBw = bandwidth of the error area)
                     case 3
