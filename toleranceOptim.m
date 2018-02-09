@@ -45,7 +45,15 @@ function [gain_dB,fc,bw_oct,Ho,f] = toleranceOptim( initGain, initFc, initBw, fs
         % find minimum difference between lower tolerance band and H_mic_temp
         [lowerMin, lowerMinPlace] = min(H_mic_temp(rangeLow:rangeHigh)-tol_interp(2,rangeLow:rangeHigh));
         
+        if ((f_interp(upperMinPlace) > 10100) || (f_interp(lowerMinPlace) > 10100))
+            return
+        end
+        
         if ((lowerMin < 0 || upperMin < 0) && (n == 0))
+            return
+        end
+        
+        if((f_interp(lowerMinPlace) > 11500) || (f_interp(upperMinPlace) > 11500))
             return
         end
         
