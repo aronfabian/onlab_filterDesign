@@ -25,6 +25,10 @@ if length(Q)>1, COMP_FREQS = Q; clear Q; end
 if ~exist('Q','var'), Q = sqrt(2)/2; end
 if ~exist('COMP_FREQS','var'), COMP_FREQS = [0:65535]/65536*fs/2; end
 
+[b,a] = butter(2,fc/(fs/2), lower(type));
+    [H_dB,~] = freqz(b,a,COMP_FREQS,fs);
+    H_dB = 20*log10(abs(H_dB));
+    
 % Frequency pre-warping
 fc = fs*2*tan(fc*2*pi/(2*fs))/(2*pi);
 f = fs*2*tan(COMP_FREQS*2*pi/(2*fs))/(2*pi);
@@ -36,9 +40,9 @@ j=sqrt(-1);
 
 switch upper(type)
     case 'HPF'
-        H_dB = 20*log10(abs( -(w/wn).^2 ./ ( 1 -(w/wn).^2 +j*w/(Q*wn)) ));
+%         H_dB = 20*log10(abs( -(w/wn).^2 ./ ( 1 -(w/wn).^2 +j*w/(Q*wn)) ));
     case 'LPF'
-        H_dB = 20*log10(abs( 1 ./ ( 1 -(w/wn).^2 +j*w/(Q*wn)) ));
+%         H_dB = 20*log10(abs( 1 ./ ( 1 -(w/wn).^2 +j*w/(Q*wn)) ));
 end
 
 semilogx(COMP_FREQS,H_dB)

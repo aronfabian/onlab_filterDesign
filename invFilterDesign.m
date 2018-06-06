@@ -78,7 +78,7 @@ function main(configFile)
                 fprintf(fileID,'\tA weighted\n');
             end
             if((filterType == 2) && (C_FILT == 1))
-                % H_mic * A_weight
+                % H_mic * C_weight
                 H_mic = H_mic - C_interp;
                 fprintf(fileID,'\tC weighted\n');
             end
@@ -110,7 +110,7 @@ function main(configFile)
 
             H_mic_origin = H_mic;
 
-            % Butterworth Filters
+            % High-/Low-pass Filters
             if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
                 [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
                 if(HPF_BUTTER == 0)
