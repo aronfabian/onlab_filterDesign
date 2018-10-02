@@ -20,8 +20,7 @@ function main(configFile)
         C_interp = interp1(C_weight(:,1), C_weight(:,2) , f_interp, 'pchip');
     end
     load('tolerance.mat');
-    
-
+   
     fileID = fopen('output.txt','w');
     fprintf(fileID,'Results:\n');
     if (isempty(fileNames))
@@ -33,6 +32,7 @@ function main(configFile)
 
     for fileNum = 1:length(fileNames)
         fprintf(fileID,'-------------------------------------------\n');
+
         fprintf(fileID,'%s \n',fileNames{fileNum});
         
         if (TOLERANCE == 1)
@@ -70,13 +70,13 @@ function main(configFile)
                 figTitle = 0;
                 switch filterType
                     case 1
-                        fprintf('A sz˚rı\n');
+                        fprintf('A sz√ªr√µ\n');
                         figTitle = 'A weighted';
                     case 2
-                        fprintf('C sz˚rı\n');
+                        fprintf('C sz√ªr√µ\n');
                         figTitle = 'C weighted';
                     case 3
-                        fprintf('nincs sz˚rı\n');
+                        fprintf('nincs sz√ªr√µ\n');
                         figTitle = 'No weighting filter';
                 end
 
@@ -109,7 +109,7 @@ function main(configFile)
                 H_mic = H_mic - H_mic(trgt_f) ;
 
 
-                % H_mic sz·mol·sa megjelenÌtÈshez
+                % H_mic sz√°mol√°sa megjelen√≠t√©shez
                 H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
                 H_trgt = zeros(1,length(f_interp));
@@ -122,7 +122,7 @@ function main(configFile)
                 hold on
                 semilogx(f_interp_plot,H_trgt_plot)
                 semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
-                leg = {'H_{mic}original';'H_{trgt}';'tolerance band';'';'Butterworth filters'};
+                leg = {'H_{mic}original';'H_{trgt}';'tolerance band';''};
                 legend(leg(1:3))
 
                 H_mic_origin = H_mic;
@@ -131,7 +131,7 @@ function main(configFile)
                 if(PAUSE == 1)
                     pause
                 end
-
+                
                 filterNum = 0;
                 finishFlag = 0;
                 while(finishFlag == 0)
@@ -145,7 +145,7 @@ function main(configFile)
                                 [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
                                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                                 H_mic = H_mic - H1 + H2;
-                                fprintf('Finomhangol·s (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
+                                fprintf('Finomhangol√°s (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
 
                             end
                         end
@@ -188,7 +188,7 @@ function main(configFile)
 
                     % end of iteration
                     if(max(errorAreas) == 0)
-                        fprintf('Class%d-es tolerancia s·vba tartozÛ ·tvitelhez sz¸ksÈges \nsz˚rık sz·ma: ',tol_index)
+                        fprintf('Class%d-es tolerancia s√°vba tartoz√≥ √°tvitelhez sz√ºks√©ges \nsz√ªr√µk sz√°ma: ',tol_index)
                         disp(filterNum-1)
                         disp('-------------------------------------------------')
                         figure
@@ -239,13 +239,13 @@ function main(configFile)
                         gain = (-1)*maxErrors(maxAreaNum);
                         fs=44100;
 
-                        fprintf('Frekvencia s·v: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
-                        fprintf('Kezdeti ÈrtÈkek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
+                        fprintf('Frekvencia s√°v: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
+                        fprintf('Kezdeti √©rt√©kek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
 
                         %pause
                         % estimate parametric filter
                         [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
-                        fprintf('A becslı ÈrtÈkei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+                        fprintf('A becsl√µ √©rt√©kei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
     %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
     %                     semilogx(f,Ho,'DisplayName', string(filterNum))
@@ -290,7 +290,7 @@ function main(configFile)
                                     butterType = 0;
                                 case 4
                                     butterType = 0;
-                                    disp('\n Egyik sz˚rıvel sem siker¸lt jobb ·tvitelt kialakÌtani!')
+                                    disp('\n Egyik sz√ªr√µvel sem siker√ºlt jobb √°tvitelt kialak√≠tani!')
                             end
 
 
@@ -303,8 +303,8 @@ function main(configFile)
                             filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
                         end
 
-    %                     disp('A becslı ÈrtÈkei: ')
-                        fprintf('Tol. s·vba optimaliz·lt: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+    %                     disp('A becsl√µ √©rt√©kei: ')
+                        fprintf('Tol. s√°vba optimaliz√°lt: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         disp('-------------------------')
 
 

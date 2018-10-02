@@ -5,7 +5,7 @@ function [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_tr
     % HPF:
     fs = 44100;
     fcb1 = START_FREQ; % highpass filter cutoff freq
-    [b,a] = butter(1,fcb1/(fs/2), 'high');
+    [b,a] = butter(2,fcb1/(fs/2), 'high');
     [Hb1,~] = freqz(b,a,f_interp,fs);
     Hb1 = 20*log10(abs(Hb1));
 %     e = sum(abs(H_mic+Hb1));
@@ -21,7 +21,7 @@ function [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_tr
     freq = logspace(log10(START_FREQ),log10(END_FREQ),100);
     for i = 2:length(freq)
         f1 = freq(i); % highpass filter cutoff freq
-        [b,a] = butter(1,f1/(fs/2), 'high');
+        [b,a] = butter(2,f1/(fs/2), 'high');
         [H1,~] = freqz(b,a,f_interp,fs);
         H1 = 20*log10(abs(H1));
 %         
@@ -61,7 +61,7 @@ function [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_tr
     
     % LPF:
     fcb2 = END_FREQ;
-    [b,a] = butter(1,fcb2/(fs/2), 'low');
+    [b,a] = butter(2,fcb2/(fs/2), 'low');
     [Hb2,~] = freqz(b,a,f_interp,fs);
     Hb2 = 20*log10(abs(Hb2));
     
@@ -76,7 +76,7 @@ function [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_tr
     
     for i = 1:(length(freq)-1)
         f2 = freq(end-i); % lowpass filter cutoff freq
-        [b,a] = butter(1,f2/(fs/2), 'low');
+        [b,a] = butter(2,f2/(fs/2), 'low');
         [H2,~] = freqz(b,a,f_interp,fs);
         H2 = 20*log10(abs(H2));
 %         if(sum(abs(H_mic+Hb1+H2)) < e)
