@@ -53,24 +53,21 @@ butter_test.asv
 butter_test.m
 Filter_Approx_(Matching)_w_ParametricEQs_01326772.pdf
 Filter_Approx_(Matching)_w_ParametricEQs_tecniac13.pdf
-Filter_Approx_(Matching)_w_ParametricEQs_tecniac13.pdf
 invFilterDesign.asv
-Filter_Approx_(Matching)_w_ParametricEQs_tecniac13.pdf
-Filter_Approx_(Matching)_w_ParametricEQs_tecniac13.pdf
 MSZ_EN_IEC_61672-1_A-szu_ro_.pdf
 MSZ_EN_IEC_61672-1_A-szu_ro_.pdf
 config.mat
-filterDesign.mlapp
+Fig. A-, B-, C-, D-weighting curves.xls
+tutorialApp.mlapp
 gui_panel.fig
 gui_panel.m
+filterDesign.mlapp
 New folder/1.jpg
 New folder/2.png
 New folder/atvitel.jpg
 New folder/bemutato_fabian.pdf
 New folder/bemutato_fabian.ppsx
 New folder/bemutato_fabian.pptx
-New folder/Fig. A-, B-, C-, D-weighting curves.xls
-tutorialApp.mlapp
-config.m
-config.mat
 output.txt
+results.txt
+

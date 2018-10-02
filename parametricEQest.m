@@ -52,9 +52,9 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain_dB, initFc, initBw
                 end
                 % gain calibration: form 0.15*MaxGain to 1.15*MaxGain (MaxGain = initGain)
                 for i = 1:INNER_LOOP
-%                     param = rand + 0.15;
-                    param = 12 * rand - 6;
-                    [Ho,~]=parametricEQ(initGain_dB+param,fc,bw_oct,fs,f_interp);
+                    param = rand + 0.15;
+%                     param = 12 * rand - 6;
+                    [Ho,~]=parametricEQ(initGain_dB*param,fc,bw_oct,fs,f_interp);
         %             if (sum(abs(H_mic+Ho)) < e)
         %                 e = sum(abs(H_mic+Ho));
         %                 gain_dB = initGain*param;
@@ -66,7 +66,7 @@ function [gain_dB,fc,bw_oct,Ho,f] = parametricEQest( initGain_dB, initFc, initBw
 %                         if(eA_new < eA)
                             eA = eA_new;
                             eT = eT_new;
-                            gain_dB = initGain_dB+param;
+                            gain_dB = initGain_dB*param;
 %                         end
                     end
                 end
