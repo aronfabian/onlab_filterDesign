@@ -53,13 +53,13 @@ function main(configFile)
             figTitle = 0;
             switch filterType
                 case 1
-                    fprintf('A sz˚rı\n');
+                    fprintf('A sz√ªr√µ\n');
                     figTitle = 'A weighted';
                 case 2
-                    fprintf('C sz˚rı\n');
+                    fprintf('C sz√ªr√µ\n');
                     figTitle = 'C weighted';
                 case 3
-                    fprintf('nincs sz˚rı\n');
+                    fprintf('nincs sz√ªr√µ\n');
                     figTitle = 'No weighting filter';
             end
                     
@@ -78,7 +78,7 @@ function main(configFile)
                 fprintf(fileID,'\tA weighted\n');
             end
             if((filterType == 2) && (C_FILT == 1))
-                % H_mic * A_weight
+                % H_mic * C_weight
                 H_mic = H_mic - C_interp;
                 fprintf(fileID,'\tC weighted\n');
             end
@@ -92,7 +92,7 @@ function main(configFile)
             H_mic = H_mic - H_mic(trgt_f) ;
 
 
-            % H_mic sz·mol·sa megjelenÌtÈshez
+            % H_mic sz√°mol√°sa megjelen√≠t√©shez
             H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
             H_trgt = zeros(1,length(f_interp));
@@ -110,26 +110,26 @@ function main(configFile)
 
             H_mic_origin = H_mic;
 
-%             % Butterworth Filters
-%             if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
-%                 [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
-%                 if(HPF_BUTTER == 0)
-%                     Hb1 = zeros(1,length(f_interp));
-%                 else
-%                     fprintf(fileID,'\t\tButterworth HPF cutoff freq: %0.1f Hz\n',fcb1);
-%                 end
-%                 if(LPF_BUTTER == 0)
-%                     Hb2 = zeros(1,length(f_interp));
-%                 else
-%                     fprintf(fileID,'\t\tButterworth LPF cutoff freq: %0.1f Hz\n',fcb2);
-%                 end
-%                 H_mic = H_mic+Hb1+Hb2;
-% 
-%             end
+            % High-/Low-pass Filters
+            if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
+                [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
+                if(HPF_BUTTER == 0)
+                    Hb1 = zeros(1,length(f_interp));
+                else
+                    fprintf(fileID,'\t\tButterworth HPF cutoff freq: %0.1f Hz\n',fcb1);
+                end
+                if(LPF_BUTTER == 0)
+                    Hb2 = zeros(1,length(f_interp));
+                else
+                    fprintf(fileID,'\t\tButterworth LPF cutoff freq: %0.1f Hz\n',fcb2);
+                end
+                H_mic = H_mic+Hb1+Hb2;
 
-%             H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
-%             semilogx(f_interp_plot,H_mic_plot)
-            legend(leg(1:4))
+            end
+
+            H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
+            semilogx(f_interp_plot,H_mic_plot)
+            legend(leg(1:5))
 
             if(PAUSE == 1)
                 pause
@@ -148,7 +148,7 @@ function main(configFile)
                             [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
                             [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                             H_mic = H_mic - H1 + H2;
-                            fprintf('Finomhangol·s (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
+                            fprintf('Finomhangol√°s (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
                     
                         end
                     end
@@ -191,7 +191,7 @@ function main(configFile)
 
                 % end of iteration
                 if(max(errorAreas) == 0)
-                    fprintf('Class1-es tolerancia s·vba tartozÛ ·tvitelhez sz¸ksÈges \nsz˚rık sz·ma: ')
+                    fprintf('Class1-es tolerancia s√°vba tartoz√≥ √°tvitelhez sz√ºks√©ges \nsz√ªr√µk sz√°ma: ')
                     disp(filterNum-1)
                     disp('-------------------------------------------------')
                     figure
@@ -252,13 +252,13 @@ function main(configFile)
                     gain = (-1)*maxErrors(maxAreaNum);
                     fs=44100;
 
-                    fprintf('Frekvencia s·v: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
-                    fprintf('Kezdeti ÈrtÈkek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
+                    fprintf('Frekvencia s√°v: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
+                    fprintf('Kezdeti √©rt√©kek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
 
                     %pause
                     % estimate parametric filter
                     [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
-                    fprintf('A becslı ÈrtÈkei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+                    fprintf('A becsl√µ √©rt√©kei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                     [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
 %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
 %                     semilogx(f,Ho,'DisplayName', string(filterNum))
@@ -303,7 +303,7 @@ function main(configFile)
                                 butterType = 0;
                             case 4
                                 butterType = 0;
-                                disp('\n Egyik sz˚rıvel sem siker¸lt jobb ·tvitelt kialakÌtani!')
+                                disp('\n Egyik sz√ªr√µvel sem siker√ºlt jobb √°tvitelt kialak√≠tani!')
                         end
                         
                             
@@ -316,8 +316,8 @@ function main(configFile)
                         filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
                     end
 
-%                     disp('A becslı ÈrtÈkei: ')
-                    fprintf('Tol. s·vba optimaliz·lt: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+%                     disp('A becsl√µ √©rt√©kei: ')
+                    fprintf('Tol. s√°vba optimaliz√°lt: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                     disp('-------------------------')
 
 

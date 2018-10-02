@@ -8,10 +8,10 @@ PLOT_FLINES = 1000; % a megjelenítéshez használt felbontás
 
 A_FILT = 1; % compensation with A-filter
 C_FILT = 0; % compensation with C-filter
-NO_FILT = 0; % no compensation
+NO_FILT = 0; % compensation to flat frequency response
 
-HPF_BUTTER = hpf; % use highpass butterworth filter 
-LPF_BUTTER = lpf; % use lowpass butterworth filter
+HPF_BUTTER = hpf; % use highpass (resonant) filter (with Q=0.707) 
+LPF_BUTTER = lpf; % use lowpass (resonant) filter (with Q=0.707)
 
 PAUSE = 0; % 0=run without pausing, 1 = run with pausing
 
