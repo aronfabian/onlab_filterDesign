@@ -31,6 +31,7 @@ for i = 1:4
     
     for n = 1:15
         invFilterDesign;
+        close all
         text1 = fileread('output.txt');
         text2 = fileread('results.txt');
         fileIDW = fopen('results.txt','w');
