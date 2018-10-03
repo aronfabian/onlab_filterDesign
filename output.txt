@@ -1,6 +1,11 @@
 Results:
 -------------------------------------------
-CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr 
+Class1:
 	A weighted
-		Butterworth HPF cutoff freq: 285.0 Hz
-		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -19.31 dB, fc: 50.0 Hz, bandwidth: 4.2245 octave
+		Parametric Filter 2: gain: -19.45 dB, fc: 13944.4 Hz, bandwidth: 0.9081 octave
+		Parametric Filter 3: gain: -8.69 dB, fc: 50.0 Hz, bandwidth: 1.1006 octave
+		Parametric Filter 4: gain: 1.13 dB, fc: 1693.3 Hz, bandwidth: 3.0210 octave
+		Parametric Filter 5: gain: -1.51 dB, fc: 482.2 Hz, bandwidth: 0.4324 octave
+		Parametric Filter 6: gain: -1.81 dB, fc: 51.0 Hz, bandwidth: 0.0959 octave
