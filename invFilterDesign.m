@@ -95,7 +95,7 @@ function main(configFile)
                     fprintf(fileID,'\tA weighted\n');
                 end
                 if((filterType == 2) && (C_FILT == 1))
-                    % H_mic * A_weight
+                    % H_mic * C_weight
                     H_mic = H_mic - C_interp;
                     fprintf(fileID,'\tC weighted\n');
                 end
@@ -198,7 +198,7 @@ function main(configFile)
                         hold on
                         semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
                         legend( [leg(1); leg(3:4)])
-
+                           
                         for i = 1:size(filters,1)
                             if (filters(i,6) == 0) % parametric filter
                                 [He,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
