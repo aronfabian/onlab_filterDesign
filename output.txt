@@ -3,9 +3,9 @@ Results:
 CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr 
 Class1:
 	A weighted
-		Parametric Filter 1: gain: -19.31 dB, fc: 50.0 Hz, bandwidth: 4.2245 octave
-		Parametric Filter 2: gain: -19.45 dB, fc: 13944.4 Hz, bandwidth: 0.9081 octave
-		Parametric Filter 3: gain: -8.69 dB, fc: 50.0 Hz, bandwidth: 1.1006 octave
-		Parametric Filter 4: gain: 1.13 dB, fc: 1693.3 Hz, bandwidth: 3.0210 octave
-		Parametric Filter 5: gain: -1.51 dB, fc: 482.2 Hz, bandwidth: 0.4324 octave
-		Parametric Filter 6: gain: -1.81 dB, fc: 51.0 Hz, bandwidth: 0.0959 octave
+		Parametric Filter 1: gain: -18.11 dB, fc: 50.0 Hz, bandwidth: 4.5030 octave
+		Parametric Filter 2: gain: -18.14 dB, fc: 14877.7 Hz, bandwidth: 0.9244 octave
+		Parametric Filter 3: gain: -11.03 dB, fc: 50.5 Hz, bandwidth: 0.7808 octave
+		Parametric Filter 4: gain: 0.89 dB, fc: 1828.5 Hz, bandwidth: 2.2890 octave
+		Parametric Filter 5: gain: -1.34 dB, fc: 513.3 Hz, bandwidth: 0.1570 octave
+		Parametric Filter 6: gain: -1.63 dB, fc: 89.2 Hz, bandwidth: 0.4408 octave

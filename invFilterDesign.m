@@ -1,11 +1,10 @@
-% close all
-%clear all
+function [filters] = invFilterDesign(fig1,fig2)
 
 %config();
-main('config.mat');
+%main('config.mat');
 
-function main(configFile)
-
+%function main(configFile)
+    configFile = 'config.mat';
     load(configFile)
     
     f_interp = logspace(log10(START_FREQ),log10(END_FREQ),COMP_FLINES);
@@ -114,19 +113,20 @@ function main(configFile)
 
                 H_trgt = zeros(1,length(f_interp));
                 H_trgt_plot = zeros(1,length(f_interp_plot));
-                figure()
-                semilogx(f_interp_plot,H_mic_plot)
-                title({fileNames{fileNum};['Class' num2str(tol_index)]; figTitle},'Interpreter', 'none')
-                xlabel('Frequency (Hz)')
-                ylabel('Magnitude (dB)')
-                hold on
-                semilogx(f_interp_plot,H_trgt_plot)
-                semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
+                %figure()
+                semilogx(fig1,f_interp_plot,H_mic_plot)
+                %title({fileNames{fileNum};['Class' num2str(tol_index)]; figTitle},'Interpreter', 'none')
+                xlabel(fig1,'Frequency (Hz)')
+                ylabel(fig1,'Magnitude (dB)')
+                hold(fig1)
+                xlim(fig1,[START_FREQ END_FREQ])
+                semilogx(fig1,f_interp_plot,H_trgt_plot)
+                semilogx(fig1,f_interp_plot,tol_interp_plot(1:2,:),'r--')
                 leg = {'H_{mic}original';'H_{trgt}';'tolerance band';''};
-                legend(leg(1:3))
+                %legend(leg(1:3))
 
                 H_mic_origin = H_mic;
-                legend(leg(1:4))
+                legend(fig1,leg(1:4))
 
                 if(PAUSE == 1)
                     pause
@@ -191,19 +191,22 @@ function main(configFile)
                         fprintf('Class%d-es tolerancia sávba tartozó átvitelhez szükséges \nszûrõk száma: ',tol_index)
                         disp(filterNum-1)
                         disp('-------------------------------------------------')
-                        figure
+                        %figure
                         H_mic_o_plot = interp1(f_interp, H_mic_origin, f_interp_plot, 'pchip');
-                        semilogx(f_interp_plot,H_mic_o_plot)
-                        title({'Original and final transfer, Filters';['Class' num2str(tol_index)];figTitle})
-                        hold on
-                        semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
-                        legend( [leg(1); leg(3:4)])
+                        semilogx(fig2,f_interp_plot,H_mic_o_plot)
+                        %title({'Original and final transfer, Filters';['Class' num2str(tol_index)];figTitle})
+                        hold(fig2)
+                        xlim(fig2,[START_FREQ END_FREQ])
+                        xlabel(fig2,'Frequency (Hz)')
+                        ylabel(fig2,'Magnitude (dB)')
+                        semilogx(fig2,f_interp_plot,tol_interp_plot(1:2,:),'r--')
+                        legend(fig2, [leg(1); leg(3:4)])
                            
                         for i = 1:size(filters,1)
                             if (filters(i,6) == 0) % parametric filter
                                 [He,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
                                 H_mic_o_plot = H_mic_o_plot + He; 
-                                semilogx(f_interp_plot,He,'DisplayName', string(i))
+                                semilogx(fig2,f_interp_plot,He,'DisplayName', string(i))
 
                                 fprintf(fileID,'\t\tParametric Filter %d: gain: %0.2f dB, fc: %0.1f Hz, bandwidth: %0.4f octave\n',i,filters(i,1),filters(i,2),filters(i,3));
 
@@ -218,11 +221,11 @@ function main(configFile)
                                 [He,~] = freqz(b,a,f_interp_plot,fs);
                                 He = 20*log10(abs(He));
                                 H_mic_o_plot = H_mic_o_plot + He; 
-                                semilogx(f_interp_plot,He,'DisplayName', string(i))
+                                semilogx(fig2,f_interp_plot,He,'DisplayName', string(i))
                             end
                         end
 
-                        semilogx(f_interp_plot,H_mic_o_plot,'DisplayName', 'H_{final}')       
+                        semilogx(fig2,f_interp_plot,H_mic_o_plot,'DisplayName', 'H_{final}')       
                         finishFlag = 1;
 
                     end
@@ -313,7 +316,7 @@ function main(configFile)
                         H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
                         % plot new transfer function
-                        semilogx(f_interp_plot, H_mic_plot, 'DisplayName', string(filterNum))
+                        semilogx(fig1,f_interp_plot, H_mic_plot, 'DisplayName', string(filterNum))
 
                         if(PAUSE == 1)
                             pause

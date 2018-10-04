@@ -29,7 +29,7 @@ fileNames = {
 EST_MODE = 1; % 1 = fc,gain,bw; 2 = random parameter select 
 
 % IF EST_MODE = 1
-OUTER_LOOP = 100;
+OUTER_LOOP = 10;
 INNER_LOOP = 20;
 
 % IF EST_MODE = 2
