@@ -1,4 +1,4 @@
-function [filters] = invFilterDesign(fig1,fig2)
+function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
 
 %config();
 %main('config.mat');
