@@ -1,0 +1,224 @@
+{
+	"Phones": [
+		{
+			"model": "12345",
+			"market_name": "OnePlus3T",
+			"phone_id": "67890",
+			"imei": "123456789012345",
+			"Class1": {
+				"A_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				},
+				"C_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				}
+			},
+			"Class2": {
+				"A_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				},
+				"C_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				}
+			}
+		},
+		{
+			"model": "SM-A320FL",
+			"market_name": "Samsung Galaxy A3(2017)",
+			"phone_id": "67890",
+			"imei": "123456789012345",
+			"Class1": {
+				"A_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				},
+				"C_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				}
+			},
+			"Class2": {
+				"A_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				},
+				"C_weighted": {
+					"HPF": [
+						{
+							"fc": 100
+						},
+						{
+							"fc": 50
+						}
+					],
+					"LPF": {
+						"fc": 15000
+					},
+					"Parametric": [
+						{
+							"gain": -20.62,
+							"fc": 50,
+							"bandwidth": 3.9656
+						},
+						{
+							"gain": -17.9,
+							"fc": 15600,
+							"bandwidth": 1.2894
+						}
+					]
+				}
+			}
+		}
+	]
+}
