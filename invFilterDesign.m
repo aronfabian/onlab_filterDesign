@@ -147,7 +147,21 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                                 H_mic = H_mic - H1 + H2;
                                 fprintf('Finomhangolás (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
-                            else %TODO: lpf hpf finomhangolása butterworthFilters()
+                            else
+                                 if(filters(i,6) == 1)
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'high');
+                                    [H1,~] = freqz(b,a,f_interp_plot,fs);
+                                    H1 = 20*log10(abs(H1));
+                                    [H2,~,filters(i,2),~] = butterworthFilters(H_mic-H1,f_interp,tol_interp,H_trgt,configFile);
+                                else
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'low');
+                                    [H1,~] = freqz(b,a,f_interp_plot,fs);
+                                    H1 = 20*log10(abs(H1));
+                                    [~,H2,~,filters(i,2)] = butterworthFilters(H_mic-H1,f_interp,tol_interp,H_trgt,configFile);
+                                end
+                                
+                                H_mic = H_mic - H1 + H2;
+                                fprintf('Finomhangolás (%d): estFc: %0.0f Hz\n', i, filters(i,2))
                             end
                         end
                     end
