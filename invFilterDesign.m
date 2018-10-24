@@ -141,12 +141,13 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                     % fine-tuning of prev. filters
                     if (filterNum > 2)
                         for i = 1:filterNum-1
-                            if(filters(i,6) == 0)
+                            if(filters(i,6) == 0) % parametrikus szûrõ
                                 [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
+                                fprintf('Finomhangolás elõtt (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
                                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                                 H_mic = H_mic - H1 + H2;
                                 fprintf('Finomhangolás (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
-
+                            else %TODO: lpf hpf finomhangolása butterworthFilters()
                             end
                         end
                     end
@@ -212,10 +213,10 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
 
                             else % butterworth filter
                                 if(filters(i,6) == 1)
-                                    [b,a] = butter(1,filters(i,2)/(fs/2),'high');
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'high');
                                     fprintf(fileID,'\t\tButterworth HPF cutoff freq: %0.1f Hz\n',filters(i,2));
                                 else
-                                    [b,a] = butter(1,filters(i,2)/(fs/2),'low');
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'low');
                                     fprintf(fileID,'\t\tButterworth LPF cutoff freq: %0.1f Hz\n',filters(i,2));
                                 end
                                 [He,~] = freqz(b,a,f_interp_plot,fs);
@@ -273,7 +274,7 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                             E = [hpfErrorT lpfErrorT paramErrorT errorT; hpfErrorA lpfErrorA paramErrorA errorA ];
                             [minT,minPlace] = min(E(1,:));
                             for n = 1:4
-                                if ((minT == E(1,n)) && E(2,minPlace) > E(2,n))
+                                if ((minT == E(1,n)) && E(2,minPlace) > E(2,n)) %ha van két azonos minimum akkor a kisebb területût választja
                                     minPlace = n;
                                     minT = E(2,n);
                                 end
@@ -284,12 +285,14 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                                     estFc = fcb1;
                                     estBw = 0;
                                     butterType = 1; %HPF
+                                    Ho = Hb1;
                                 case 2 
                                     estGain = 0;
                                     estFc = fcb2;
                                     estBw = 0;
                                     butterType = 2; % LPF
-                                case 3 
+                                    Ho = Hb2;
+                                case 3 % parametrikus
                                     butterType = 0;
                                 case 4
                                     butterType = 0;
@@ -307,7 +310,7 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                         end
 
     %                     disp('A becslõ értékei: ')
-                        fprintf('Tol. sávba optimalizált: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+                        fprintf('\nVégsõ: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         disp('-------------------------')
 
 
