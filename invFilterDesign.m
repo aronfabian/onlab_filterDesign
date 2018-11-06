@@ -265,9 +265,9 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                         [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
                         fprintf('A becslõ értékei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
-    %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
-    %                     semilogx(f,Ho,'DisplayName', string(filterNum))
+
                          butterType = 0;
+                         saveFilter = 1;
                         %try butterworth filters
                          if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
                             [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
@@ -310,17 +310,21 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                                     butterType = 0;
                                 case 4
                                     butterType = 0;
+                                    saveFilter = 0; % nem mentjük el a szûrõt
+                                    filterNum = filterNum - 1; % ne növljük a következõ iterációban a szûrõk számát
                                     disp('\n Egyik szûrõvel sem sikerült jobb átvitelt kialakítani!')
                             end
 
 
                         end
 
-                        % save filter parameters 
-                        if (filterNum == 1)
-                            filters =  [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
-                        else
-                            filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                        % save filter parameters
+                        if(saveFilter == 1) % ha nem sikerült jobb szûrõt találni
+                            if (filterNum == 1)
+                                filters =  [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                            else
+                                filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                            end
                         end
 
     %                     disp('A becslõ értékei: ')
