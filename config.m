@@ -6,11 +6,11 @@ COMP_FLINES = 1000; % az átviteli fgv számításakor használt felbontás
 PLOT_FLINES = 1000; % a megjelenítéshez használt felbontás
 
 A_FILT = 1; % compensation with A-filter
-C_FILT = 1; % compensation with C-filter
-NO_FILT = 1; % compensation to flat frequency response
+C_FILT = 0; % compensation with C-filter
+NO_FILT = 0; % compensation to flat frequency response
 
-HPF_BUTTER = 1; % use highpass butterworth filter 
-LPF_BUTTER = 1; % use lowpass butterworth filter
+HPF_BUTTER = 0; % use highpass butterworth filter 
+LPF_BUTTER = 0; % use lowpass butterworth filter
 
 PAUSE = 1; % 0=run without pausing, 1 = run with pausing
 
@@ -18,7 +18,9 @@ fileNames = {
 %  'CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr'
 % 'CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr'
 %  'CutOf_Samsung Galaxy Alpha - 20170427_183001_SweepOnly_h_bSpectr'
-'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
+% 'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr'
+% 'CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr_copy'
+'CutOf_OnePlus3_Unprocessed_SweepOnly_h_bSpectr.mat'
 };
 
 %% ParamaetricEQEst

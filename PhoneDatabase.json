@@ -1,0 +1,79 @@
+{
+	"Phones": [
+		{
+			"androidID": "12345",
+			"type": "OnePlus3T",
+			"A_weighted": {
+				"HPF": [
+					{
+						"fc": 100
+					},
+					{
+						"fc": 50
+					}
+				],
+				"Parametric": [
+					{
+						"gain": -20.62,
+						"fc": 50,
+						"bandwidth": 3.9656
+					},
+					{
+						"gain": -17.9,
+						"fc": 15600,
+						"bandwidth": 1.2894
+					}
+				]
+			},
+			"C_weighted": null
+		},
+		{
+			"androidID": "67890",
+			"type": "Galaxy S8",
+			"A_weighted": {
+				"HPF": [
+					{
+						"fc": 100
+					},
+					{
+						"fc": 50
+					}
+				],
+				"Parametric": [
+					{
+						"gain": -20.62,
+						"fc": 50,
+						"bandwidth": 3.9656
+					},
+					{
+						"gain": -17.9,
+						"fc": 15600,
+						"bandwidth": 1.2894
+					}
+				]
+			},
+			"C_weighted": {
+				"HPF": [
+					{
+						"fc": 100
+					},
+					{
+						"fc": 50
+					}
+				],
+				"Parametric": [
+					{
+						"gain": -20.62,
+						"fc": 50,
+						"bandwidth": 3.9656
+					},
+					{
+						"gain": -17.9,
+						"fc": 15600,
+						"bandwidth": 1.2894
+					}
+				]
+			}
+		}
+	]
+}

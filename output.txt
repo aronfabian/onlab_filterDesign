@@ -1,6 +1,41 @@
 Results:
 -------------------------------------------
-CutOf_Samsung Galaxy Mini 2 - 20170427_174623_SweepOnly_h_bSpectr 
+CutOf_OnePlus3_Unprocessed_SweepOnly_h_bSpectr.mat 
 	A weighted
-		Butterworth HPF cutoff freq: 285.0 Hz
-		Butterworth LPF cutoff freq: 9807.9 Hz
+		Parametric Filter 1: gain: -20.62 dB, fc: 50.0 Hz, bandwidth: 3.9656 octave
+		Parametric Filter 2: gain: -17.90 dB, fc: 15600.0 Hz, bandwidth: 1.2894 octave
+		Parametric Filter 3: gain: 2.21 dB, fc: 939.1 Hz, bandwidth: 0.7559 octave
+		Parametric Filter 4: gain: 3.01 dB, fc: 66.8 Hz, bandwidth: 0.2279 octave
+		Parametric Filter 5: gain: -5.72 dB, fc: 50.0 Hz, bandwidth: 0.1740 octave
+		Parametric Filter 6: gain: 1.12 dB, fc: 12756.8 Hz, bandwidth: 0.1534 octave
+
+
+JSON
+{"Phone": {
+  "Type": "OnePlus3T",
+  "A_weighted": {
+    "HPF": [
+      {"fc": "50.0"},
+    ]
+    "Parametric": [
+      {"gain": "-20.62", "fc": "50.0", "bandwidth": "3.9656"},
+      {"gain": "-17.90", "fc": "15600.0", "bandwidth": "1.2894"},
+    ]
+  }
+}}
+
+
+
+MATLAB
+{"Phone", {
+  "Type", "OnePlus3T",
+  "A_weighted", {
+    "HPF", [
+      {"fc", "50.0"},
+    ]
+    "Parametric", [
+      {"gain", "-20.62", "fc", "50.0", "bandwidth", "3.9656"},
+      {"gain", "-17.90", "fc", "15600.0", "bandwidth", "1.2894"},
+    ]
+  }
+}}
