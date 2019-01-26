@@ -1,11 +1,9 @@
 Results:
 -------------------------------------------
-CutOf_iPhone_5S_MFRecorder_2017-04-27 17-08-07_SweepOnly_h_bSpectr 
+C:\Users\arons\OneDrive\BME\MSc\2.félév\önlab\CutOf_Samsung Galaxy Ace 20170427_173930_SweepOnly_h_bSpectr.mat 
 Class1:
 	A weighted
-		Parametric Filter 1: gain: -19.31 dB, fc: 50.0 Hz, bandwidth: 4.2245 octave
-		Parametric Filter 2: gain: -19.45 dB, fc: 13944.4 Hz, bandwidth: 0.9081 octave
-		Parametric Filter 3: gain: -8.69 dB, fc: 50.0 Hz, bandwidth: 1.1006 octave
-		Parametric Filter 4: gain: 1.13 dB, fc: 1693.3 Hz, bandwidth: 3.0210 octave
-		Parametric Filter 5: gain: -1.51 dB, fc: 482.2 Hz, bandwidth: 0.4324 octave
-		Parametric Filter 6: gain: -1.81 dB, fc: 51.0 Hz, bandwidth: 0.0959 octave
+		Parametric Filter 1: gain: -16.68 dB, fc: 50.0 Hz, bandwidth: 4.5121 octave
+		Butterworth HPF cutoff freq: 56.2 Hz
+		Parametric Filter 3: gain: -10.99 dB, fc: 9655.6 Hz, bandwidth: 1.3108 octave
+		Parametric Filter 4: gain: 2.18 dB, fc: 750.1 Hz, bandwidth: 0.6081 octave

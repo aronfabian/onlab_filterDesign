@@ -1,11 +1,10 @@
-% close all
-%clear all
+function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
 
 %config();
-main('config.mat');
+%main('config.mat');
 
-function main(configFile)
-
+%function main(configFile)
+    configFile = 'config.mat';
     load(configFile)
     
     f_interp = logspace(log10(START_FREQ),log10(END_FREQ),COMP_FLINES);
@@ -70,13 +69,13 @@ function main(configFile)
                 figTitle = 0;
                 switch filterType
                     case 1
-                        fprintf('A szÃ»rÃµ\n');
+                        fprintf('A szûrõ\n');
                         figTitle = 'A weighted';
                     case 2
-                        fprintf('C szÃ»rÃµ\n');
+                        fprintf('C szûrõ\n');
                         figTitle = 'C weighted';
                     case 3
-                        fprintf('nincs szÃ»rÃµ\n');
+                        fprintf('nincs szûrõ\n');
                         figTitle = 'No weighting filter';
                 end
 
@@ -109,24 +108,25 @@ function main(configFile)
                 H_mic = H_mic - H_mic(trgt_f) ;
 
 
-                % H_mic szÃ¡molÃ¡sa megjelenÃ­tÃ©shez
+                % H_mic számolása megjelenítéshez
                 H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
                 H_trgt = zeros(1,length(f_interp));
                 H_trgt_plot = zeros(1,length(f_interp_plot));
-                figure()
-                semilogx(f_interp_plot,H_mic_plot)
-                title({fileNames{fileNum};['Class' num2str(tol_index)]; figTitle},'Interpreter', 'none')
-                xlabel('Frequency (Hz)')
-                ylabel('Magnitude (dB)')
-                hold on
-                semilogx(f_interp_plot,H_trgt_plot)
-                semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
+                %figure()
+                semilogx(fig1,f_interp_plot,H_mic_plot)
+                %title({fileNames{fileNum};['Class' num2str(tol_index)]; figTitle},'Interpreter', 'none')
+                xlabel(fig1,'Frequency (Hz)')
+                ylabel(fig1,'Magnitude (dB)')
+                hold(fig1)
+                xlim(fig1,[START_FREQ END_FREQ])
+                semilogx(fig1,f_interp_plot,H_trgt_plot)
+                semilogx(fig1,f_interp_plot,tol_interp_plot(1:2,:),'r--')
                 leg = {'H_{mic}original';'H_{trgt}';'tolerance band';''};
-                legend(leg(1:3))
+                %legend(leg(1:3))
 
                 H_mic_origin = H_mic;
-                legend(leg(1:4))
+                legend(fig1,leg(1:4))
 
                 if(PAUSE == 1)
                     pause
@@ -141,12 +141,27 @@ function main(configFile)
                     % fine-tuning of prev. filters
                     if (filterNum > 2)
                         for i = 1:filterNum-1
-                            if(filters(i,6) == 0)
+                            if(filters(i,6) == 0) % parametrikus szûrõ
                                 [H1,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp);
+                                fprintf('Finomhangolás elõtt (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
                                 [filters(i,1),filters(i,2),filters(i,3),H2,f] = parametricEQest(filters(i,1),filters(i,2),filters(i,3),fs,H_mic-H1,filters(i,4),filters(i,5),f_interp,H_trgt,tol_interp,configFile);
                                 H_mic = H_mic - H1 + H2;
-                                fprintf('FinomhangolÃ¡s (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
-
+                                fprintf('Finomhangolás (%d): estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', i, filters(i,2) , filters(i,3), filters(i,1))
+                            else
+                                 if(filters(i,6) == 1)
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'high');
+                                    [H1,~] = freqz(b,a,f_interp_plot,fs);
+                                    H1 = 20*log10(abs(H1));
+                                    [H2,~,filters(i,2),~] = butterworthFilters(H_mic-H1,f_interp,tol_interp,H_trgt,configFile);
+                                else
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'low');
+                                    [H1,~] = freqz(b,a,f_interp_plot,fs);
+                                    H1 = 20*log10(abs(H1));
+                                    [~,H2,~,filters(i,2)] = butterworthFilters(H_mic-H1,f_interp,tol_interp,H_trgt,configFile);
+                                end
+                                
+                                H_mic = H_mic - H1 + H2;
+                                fprintf('Finomhangolás (%d): estFc: %0.0f Hz\n', i, filters(i,2))
                             end
                         end
                     end
@@ -188,41 +203,44 @@ function main(configFile)
 
                     % end of iteration
                     if(max(errorAreas) == 0)
-                        fprintf('Class%d-es tolerancia sÃ¡vba tartozÃ³ Ã¡tvitelhez szÃ¼ksÃ©ges \nszÃ»rÃµk szÃ¡ma: ',tol_index)
+                        fprintf('Class%d-es tolerancia sávba tartozó átvitelhez szükséges \nszûrõk száma: ',tol_index)
                         disp(filterNum-1)
                         disp('-------------------------------------------------')
-                        figure
+                        %figure
                         H_mic_o_plot = interp1(f_interp, H_mic_origin, f_interp_plot, 'pchip');
-                        semilogx(f_interp_plot,H_mic_o_plot)
-                        title({'Original and final transfer, Filters';['Class' num2str(tol_index)];figTitle})
-                        hold on
-                        semilogx(f_interp_plot,tol_interp_plot(1:2,:),'r--')
-                        legend( [leg(1); leg(3:4)])
+                        semilogx(fig2,f_interp_plot,H_mic_o_plot)
+                        %title({'Original and final transfer, Filters';['Class' num2str(tol_index)];figTitle})
+                        hold(fig2)
+                        xlim(fig2,[START_FREQ END_FREQ])
+                        xlabel(fig2,'Frequency (Hz)')
+                        ylabel(fig2,'Magnitude (dB)')
+                        semilogx(fig2,f_interp_plot,tol_interp_plot(1:2,:),'r--')
+                        legend(fig2, [leg(1); leg(3:4)])
                            
                         for i = 1:size(filters,1)
                             if (filters(i,6) == 0) % parametric filter
                                 [He,~] = parametricEQ(filters(i,1),filters(i,2),filters(i,3),fs,f_interp_plot);
                                 H_mic_o_plot = H_mic_o_plot + He; 
-                                semilogx(f_interp_plot,He,'DisplayName', string(i))
+                                semilogx(fig2,f_interp_plot,He,'DisplayName', string(i))
 
                                 fprintf(fileID,'\t\tParametric Filter %d: gain: %0.2f dB, fc: %0.1f Hz, bandwidth: %0.4f octave\n',i,filters(i,1),filters(i,2),filters(i,3));
 
                             else % butterworth filter
                                 if(filters(i,6) == 1)
-                                    [b,a] = butter(1,filters(i,2)/(fs/2),'high');
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'high');
                                     fprintf(fileID,'\t\tButterworth HPF cutoff freq: %0.1f Hz\n',filters(i,2));
                                 else
-                                    [b,a] = butter(1,filters(i,2)/(fs/2),'low');
+                                    [b,a] = butter(2,filters(i,2)/(fs/2),'low');
                                     fprintf(fileID,'\t\tButterworth LPF cutoff freq: %0.1f Hz\n',filters(i,2));
                                 end
                                 [He,~] = freqz(b,a,f_interp_plot,fs);
                                 He = 20*log10(abs(He));
                                 H_mic_o_plot = H_mic_o_plot + He; 
-                                semilogx(f_interp_plot,He,'DisplayName', string(i))
+                                semilogx(fig2,f_interp_plot,He,'DisplayName', string(i))
                             end
                         end
 
-                        semilogx(f_interp_plot,H_mic_o_plot,'DisplayName', 'H_{final}')       
+                        semilogx(fig2,f_interp_plot,H_mic_o_plot,'DisplayName', 'H_{final}')       
                         finishFlag = 1;
 
                     end
@@ -239,17 +257,17 @@ function main(configFile)
                         gain = (-1)*maxErrors(maxAreaNum);
                         fs=44100;
 
-                        fprintf('Frekvencia sÃ¡v: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
-                        fprintf('Kezdeti Ã©rtÃ©kek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
+                        fprintf('Frekvencia sáv: %0.0f - %0.0f Hz \n', startEndFreq(maxAreaNum), startEndFreq(maxAreaNum+1))
+                        fprintf('Kezdeti értékek: fc: %0.0f Hz, bw: %0.2f oct, gain: %0.2f dB \n', fc, bw, gain)
 
                         %pause
                         % estimate parametric filter
                         [estGain,estFc,estBw,Ho,~] = parametricEQest(gain,fc,bw,fs,H_mic,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),f_interp,H_trgt,tol_interp,configFile);
-                        fprintf('A becslÃµ Ã©rtÃ©kei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+                        fprintf('A becslõ értékei: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         [estGain,estFc,estBw,Ho,~] = toleranceOptim(estGain,estFc,estBw,fs,H_mic,f_interp,COMP_FLINES, tol_interp,configFile);
-    %                     [Ho,f] = parametricEQ(estGain,estFc,estBw,fs,f_interp);
-    %                     semilogx(f,Ho,'DisplayName', string(filterNum))
+
                          butterType = 0;
+                         saveFilter = 1;
                         %try butterworth filters
                          if ((HPF_BUTTER == 1) || (LPF_BUTTER == 1))
                             [Hb1,Hb2,fcb1,fcb2] = butterworthFilters(H_mic,f_interp,tol_interp,H_trgt,configFile);
@@ -270,7 +288,7 @@ function main(configFile)
                             E = [hpfErrorT lpfErrorT paramErrorT errorT; hpfErrorA lpfErrorA paramErrorA errorA ];
                             [minT,minPlace] = min(E(1,:));
                             for n = 1:4
-                                if ((minT == E(1,n)) && E(2,minPlace) > E(2,n))
+                                if ((minT == E(1,n)) && E(2,minPlace) > E(2,n)) %ha van két azonos minimum akkor a kisebb területût választja
                                     minPlace = n;
                                     minT = E(2,n);
                                 end
@@ -281,30 +299,36 @@ function main(configFile)
                                     estFc = fcb1;
                                     estBw = 0;
                                     butterType = 1; %HPF
+                                    Ho = Hb1;
                                 case 2 
                                     estGain = 0;
                                     estFc = fcb2;
                                     estBw = 0;
                                     butterType = 2; % LPF
-                                case 3 
+                                    Ho = Hb2;
+                                case 3 % parametrikus
                                     butterType = 0;
                                 case 4
                                     butterType = 0;
-                                    disp('\n Egyik szÃ»rÃµvel sem sikerÃ¼lt jobb Ã¡tvitelt kialakÃ­tani!')
+                                    saveFilter = 0; % nem mentjük el a szûrõt
+                                    filterNum = filterNum - 1; % ne növljük a következõ iterációban a szûrõk számát
+                                    disp('\n Egyik szûrõvel sem sikerült jobb átvitelt kialakítani!')
                             end
 
 
                         end
 
-                        % save filter parameters 
-                        if (filterNum == 1)
-                            filters =  [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
-                        else
-                            filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                        % save filter parameters
+                        if(saveFilter == 1) % ha nem sikerült jobb szûrõt találni
+                            if (filterNum == 1)
+                                filters =  [estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                            else
+                                filters = [filters; estGain,estFc,estBw,startEndFreq(maxAreaNum),startEndFreq(maxAreaNum+1),butterType];
+                            end
                         end
 
-    %                     disp('A becslÃµ Ã©rtÃ©kei: ')
-                        fprintf('Tol. sÃ¡vba optimalizÃ¡lt: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
+    %                     disp('A becslõ értékei: ')
+                        fprintf('\nVégsõ: estFc: %0.0f Hz, estBw: %0.2f oct, estGain: %0.2f dB \n', estFc , estBw, estGain)
                         disp('-------------------------')
 
 
@@ -313,7 +337,7 @@ function main(configFile)
                         H_mic_plot = interp1(f_interp, H_mic, f_interp_plot, 'pchip');
 
                         % plot new transfer function
-                        semilogx(f_interp_plot, H_mic_plot, 'DisplayName', string(filterNum))
+                        semilogx(fig1,f_interp_plot, H_mic_plot, 'DisplayName', string(filterNum))
 
                         if(PAUSE == 1)
                             pause
