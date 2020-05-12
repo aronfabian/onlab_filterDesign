@@ -123,6 +123,7 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                 semilogx(fig1,f_interp_plot,H_trgt_plot)
                 semilogx(fig1,f_interp_plot,tol_interp_plot(1:2,:),'r--')
                 leg = {'H_{mic}original';'H_{trgt}';'tolerance band';''};
+                grid(fig1,'on') 
                 %legend(leg(1:3))
 
                 H_mic_origin = H_mic;
@@ -216,6 +217,7 @@ function [filters,H_mic_origin] = invFilterDesign(fig1,fig2)
                         ylabel(fig2,'Magnitude (dB)')
                         semilogx(fig2,f_interp_plot,tol_interp_plot(1:2,:),'r--')
                         legend(fig2, [leg(1); leg(3:4)])
+                        grid(fig2,'on')
                            
                         for i = 1:size(filters,1)
                             if (filters(i,6) == 0) % parametric filter

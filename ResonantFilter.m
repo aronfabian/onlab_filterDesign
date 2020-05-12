@@ -1,5 +1,8 @@
 function [H_dB,f] = ResonantFilter(fc,type,fs,Q,COMP_FREQS)
-% [H_dB,f] = ResonantFilter(fc,type,fs,COMP_FREQS)
+% [H_dB,f] = ResonantFilter(fc,type,fs,Q,COMP_FREQS)
+%
+% Q and/or COMP_FREQS can be omitted.
+%
 % Designs a digital resonant filter with given 
 %        cut-off frequency fc in Hz,
 %        type (high-pass/low-pass) valid values: 'HPF' or 'LPF',
@@ -7,7 +10,6 @@ function [H_dB,f] = ResonantFilter(fc,type,fs,Q,COMP_FREQS)
 %        Q factor (default is 0.707) and
 % and returns the transfer function at COMP_FREQS frequencies  in Hz
 % (default are 65k points in the range of [0..fs/2[).
-% Q and/or COMP_FREQS can be omitted.
 
 
 % Ennek a függvénynek a magja egy analóg rezonáns szûrõt tervez, a digitális
@@ -21,11 +23,18 @@ function [H_dB,f] = ResonantFilter(fc,type,fs,Q,COMP_FREQS)
 % pontokra kiszámított átvitel-értékeket az eredeti frekvenciákra
 % értelmezem.
 
-if length(Q)>1, COMP_FREQS = Q; clear Q; end
 if ~exist('Q','var'), Q = sqrt(2)/2; end
+if length(Q)>1, COMP_FREQS = Q; clear Q; end
 if ~exist('COMP_FREQS','var'), COMP_FREQS = [0:65535]/65536*fs/2; end
 
-[b,a] = butter(2,fc/(fs/2), lower(type));
+switch upper(type)
+    case 'HPF', ftype = 'high';
+    case 'LPF', ftype = 'low';
+    otherwise, error('Invalid filter type!')
+end
+    
+
+[b,a] = butter(2,fc/(fs/2), ftype);
     [H_dB,~] = freqz(b,a,COMP_FREQS,fs);
     H_dB = 20*log10(abs(H_dB));
     
