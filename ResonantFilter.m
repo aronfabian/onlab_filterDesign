@@ -33,8 +33,32 @@ switch upper(type)
     otherwise, error('Invalid filter type!')
 end
     
+% %% Manual computation of filter parameters - this is perfectly in sync with Matlab's butter func
+% % https://stackoverflow.com/questions/20924868/calculate-coefficients-of-2nd-order-butterworth-low-pass-filter
+% % LPF
+% ita =1.0/ tan(pi*fc/fs);
+% q=sqrt(2.0);
+%     b0 = 1.0 / (1.0 + q*ita + ita*ita);
+%     b1= 2*b0;
+%     b2= b0;
+%     a1 = 2.0 * (ita*ita - 1.0) * b0;
+%     a2 = -(1.0 - q*ita + ita*ita) * b0;
+% b_LPF = [b0 b1 b2];
+% a_LPF = [1 a1 a2];
+% 
+% % HPF
+% q=sqrt(2.0);
+% wca = tan(pi * fc /fs); % equivalent analogue filter cut-off
+% wca2 = wca^2; % square of wca
+% 
+% K = wca2 + q*wca + 1;
+% a_HPF = [1   (2*wca2-2)/K   (wca2-q*wca+1)/K];
+% b_HPF = [1     -2         1 ] / K;
 
-[b,a] = butter(2,fc/(fs/2), ftype);
+%%
+
+[b,a] = butter(2,fc/(fs/2), ftype)
+
     [H_dB,~] = freqz(b,a,COMP_FREQS,fs);
     H_dB = 20*log10(abs(H_dB));
     
